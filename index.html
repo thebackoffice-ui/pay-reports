@@ -90,16 +90,18 @@ body {
 }
 
 .week-select-wrap {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex;
+  align-items: center;
   background: var(--blue-bg);
-  border: 1.5px solid var(--blue-bd);
-  border-radius: 10px;
-  padding: 7px 10px 7px 12px;
-  position: relative;
+  border: 0.5px solid var(--blue-bd);
+  border-radius: 999px;
+  padding: 0 12px;
+  height: 32px;
+  gap: 5px;
 }
 
 .week-select {
-  font-size: 13px; font-weight: 700;
+  font-size: 12px; font-weight: 600;
   color: var(--blue);
   background: transparent;
   border: none;
@@ -107,7 +109,6 @@ body {
   font-family: 'Inter', sans-serif;
   appearance: none; -webkit-appearance: none;
   padding: 0;
-  min-width: 120px;
 }
 
 /* ── Card ── */
@@ -564,8 +565,8 @@ function weekSelectorHTML() {
     return `<option value="${i}" ${i === activeIndex ? 'selected' : ''} ${noData ? 'disabled' : ''}>${w.label}${noData ? ' (no data)' : ''}</option>`;
   }).join('');
   return `<div class="week-select-wrap">
-    <svg viewBox="0 0 14 14" fill="none" style="width:11px;height:11px;flex-shrink:0;pointer-events:none"><path d="M2 4.5l5 5 5-5" stroke="#185FA5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <select class="week-select" onchange="switchWeek(this.value)">${options}</select>
+    <svg viewBox="0 0 14 14" fill="none" style="width:9px;height:9px;flex-shrink:0;pointer-events:none;opacity:0.6"><path d="M2 4.5l5 5 5-5" stroke="#185FA5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>`;
 }
 
