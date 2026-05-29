@@ -513,10 +513,12 @@ const officeParam = params.get("office");
 const viewParam   = params.get("view");
 
 // ── Week index state
-let weekIndex    = []; // [{label, url}] newest first
-let activeUrl    = '';
-let activeLabel  = '';
-let activeIndex  = 0;
+let weekIndex        = []; // [{label, url}] newest first
+let activeUrl        = '';
+let activeLabel      = '';
+let activeIndex      = 0;
+let lastGoodIndex    = 0;  // last week that successfully had data for this rep
+let repWeeksWithData = new Set(); // indices of weeks confirmed to have rep data
 
 // ── Fetch the week index, then kick off the report
 async function init() {
@@ -556,9 +558,11 @@ function switchWeek(idx) {
 // ── Build the week selector dropdown (injected into every topbar)
 function weekSelectorHTML() {
   if (weekIndex.length <= 1) return `<span class="week-badge">${activeLabel}</span>`;
-  const options = weekIndex.map((w, i) =>
-    `<option value="${i}" ${i === activeIndex ? 'selected' : ''}>${w.label}</option>`
-  ).join('');
+  const isRepView = !viewParam && nameParam;
+  const options = weekIndex.map((w, i) => {
+    const noData = isRepView && repWeeksWithData.size > 0 && !repWeeksWithData.has(i);
+    return `<option value="${i}" ${i === activeIndex ? 'selected' : ''} ${noData ? 'disabled' : ''}>${w.label}${noData ? ' (no data)' : ''}</option>`;
+  }).join('');
   return `<div class="week-select-wrap">
     <svg viewBox="0 0 14 14" fill="none" style="width:11px;height:11px;flex-shrink:0;pointer-events:none"><path d="M2 4.5l5 5 5-5" stroke="#185FA5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <select class="week-select" onchange="switchWeek(this.value)">${options}</select>
@@ -1189,19 +1193,25 @@ async function loadRepHistory() {
   el.style.display = 'block';
 
   const results = await Promise.allSettled(
-    weekIndex.map(async (w) => {
+    weekIndex.map(async (w, i) => {
       try {
         const text = await (await fetch(w.url)).text();
         const rows = parseCSV(text);
         const headers = rows[0].map(h => h.trim());
         const match = rows.slice(1).find(r => r[0]?.trim().toLowerCase() === nameParam.trim().toLowerCase());
-        if (!match) return { label: w.label, pay: 0, found: false };
+        if (!match) return { label: w.label, pay: 0, found: false, idx: i };
         const d = {};
         headers.forEach((h, i) => d[h] = match[i]);
-        return { label: w.label, pay: num(d['Total Pay']), found: true };
-      } catch { return { label: w.label, pay: 0, found: false }; }
+        repWeeksWithData.add(i); // mark this week as having data
+        return { label: w.label, pay: num(d['Total Pay']), found: true, idx: i };
+      } catch { return { label: w.label, pay: 0, found: false, idx: i }; }
     })
   );
+
+  // Refresh the week selector now we know which weeks have data
+  document.querySelectorAll('.week-select-wrap select').forEach(sel => {
+    sel.outerHTML = weekSelectorHTML();
+  });
 
   // oldest first for chart — weekIndex is newest-first so reverse
   const points = results
@@ -1283,10 +1293,19 @@ async function loadData(sheetUrl) {
     );
 
     if (!matchingRows.length) {
-      document.getElementById('app').innerHTML =
-        `<div class="state-center"><span>No report found for <strong>${nameParam || '(no name)'}</strong> in <strong>${activeLabel}</strong>.</span></div>`;
+      document.getElementById('app').innerHTML = `
+        <div class="state-center">
+          <div style="font-size:32px;margin-bottom:4px;">📭</div>
+          <strong style="font-size:15px;color:var(--text);">No data this week</strong>
+          <span style="font-size:13px;color:var(--muted);margin-top:4px;">${activeLabel}</span>
+          <button onclick="switchWeek(${lastGoodIndex})" style="margin-top:18px;background:var(--blue);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;padding:11px 22px;border-radius:12px;cursor:pointer;">← Back to ${weekIndex[lastGoodIndex]?.label || 'latest week'}</button>
+        </div>`;
       return;
     }
+
+    // Mark this week as having data and update last good index
+    repWeeksWithData.add(activeIndex);
+    lastGoodIndex = activeIndex;
 
     const repRows = matchingRows.map(r => {
       const d = {};
