@@ -249,6 +249,8 @@ body {
 .earn-box.wide { grid-column: span 2; }
 .earn-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--soft); font-weight: 700; margin-bottom: 8px; }
 .earn-value { font-size: 23px; font-weight: 700; letter-spacing: -0.8px; color: var(--text); }
+.earn-value.negative { color: var(--red); }
+.earn-box.deduct { background: var(--red-bg); border-color: var(--red-bd); }
 
 /* ── Summary ── */
 .summary-row {
@@ -595,11 +597,13 @@ function initials(name) {
 
 /* ── Count-up ── */
 function countUp(el, target, prefix, decimals, duration) {
+  const negative = target < 0;
+  const abs = Math.abs(target);
   const start = performance.now();
   function step(now) {
     const p = Math.min((now - start) / duration, 1);
     const e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-    el.textContent = prefix + (e * target).toLocaleString('en-GB', {
+    el.textContent = (negative ? '-' : '') + prefix + (e * abs).toLocaleString('en-GB', {
       minimumFractionDigits: decimals, maximumFractionDigits: decimals
     });
     if (p < 1) requestAnimationFrame(step);
@@ -690,10 +694,10 @@ function render(rows) {
   const state    = pct >= 80 ? 'good' : pct >= 60 ? 'warn' : 'bad';
   const rateIcon = state === 'good' ? SVG_THUMBS : SVG_ALERT;
   const alertMsg = state === 'good'
-    ? 'Strong week — payable rate is performing above target.'
+    ? 'Strong week — payable rate is above target. Keep it up.'
     : state === 'warn'
-    ? "Tracking steadily, but there's room to push higher. Focus on quality leads this week."
-    : 'Conversion is below the 80% target. Some work needs to be done — review cancelled leads with your manager this week.';
+    ? 'Getting there, but room to improve. Focus on lead quality this week.'
+    : 'Below target. Review your cancelled leads with your manager this week.';
 
   /* Build a performance section per campaign row */
   function perfSection(r, idx) {
@@ -781,11 +785,11 @@ function render(rows) {
     <section class="section">
       <p class="section-label">Earnings breakdown</p>
       <div class="earn-grid">
-        <div class="earn-box card"><div class="earn-label">Top Ups</div><div class="earn-value" id="earn-topups">£0.00</div></div>
-        <div class="earn-box card"><div class="earn-label">Tablet</div><div class="earn-value" id="earn-tablet">£0.00</div></div>
-        <div class="earn-box card"><div class="earn-label">DWM Incentive</div><div class="earn-value" id="earn-dwm">£0.00</div></div>
-        <div class="earn-box card"><div class="earn-label">Adjustment</div><div class="earn-value" id="earn-adj">£0.00</div></div>
-        ${hasOverride ? `<div class="earn-box card wide"><div class="earn-label">Override</div><div class="earn-value" id="earn-override">£0.00</div></div>` : ''}
+        <div class="earn-box card${topUps < 0 ? ' deduct' : ''}"><div class="earn-label">Top Ups</div><div class="earn-value${topUps < 0 ? ' negative' : ''}" id="earn-topups">£0.00</div></div>
+        <div class="earn-box card${tablet < 0 ? ' deduct' : ''}"><div class="earn-label">Tablet</div><div class="earn-value${tablet < 0 ? ' negative' : ''}" id="earn-tablet">£0.00</div></div>
+        <div class="earn-box card${dwm < 0 ? ' deduct' : ''}"><div class="earn-label">DWM Incentive</div><div class="earn-value${dwm < 0 ? ' negative' : ''}" id="earn-dwm">£0.00</div></div>
+        <div class="earn-box card${adj < 0 ? ' deduct' : ''}"><div class="earn-label">Adjustment</div><div class="earn-value${adj < 0 ? ' negative' : ''}" id="earn-adj">£0.00</div></div>
+        ${hasOverride ? `<div class="earn-box card wide${override < 0 ? ' deduct' : ''}"><div class="earn-label">Override</div><div class="earn-value${override < 0 ? ' negative' : ''}" id="earn-override">£0.00</div></div>` : ''}
       </div>
     </section>
 
