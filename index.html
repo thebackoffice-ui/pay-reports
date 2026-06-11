@@ -592,15 +592,80 @@ function initials(name) {
   return name.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
 }
 
-/* ── Detect if a row has WightFibre data (Type 3 or Type 4 populated) ── */
-function isWightFibre(r) {
-  const t1 = clean(r['Type 1']);
+/* ── Campaign detection ──
+   Returns { name, icon, color, isMultiTier }
+   based on the type values in the row.
+──────────────────────────────────────────── */
+const SVG_FLAME  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 0-5 4.5-5 9a5 5 0 0010 0c0-4.5-5-9-5-9z"/><path d="M12 12c0 0-2 1.5-2 3a2 2 0 004 0c0-1.5-2-3-2-3z"/></svg>`;
+const SVG_HEART  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`;
+
+const CAMPAIGN_CONFIGS = {
+  wightfibre: {
+    name: 'WightFibre Doors',
+    icon: SVG_WIFI,
+    accentColor: '#0369A1',
+    dotColor: '#0ea5e9',
+    isMultiTier: true,
+    tierSuffix: ' Mbps',
+    typePatterns: ['150','300','500','900'],
+  },
+  scottishpower: {
+    name: 'Scottish Power',
+    icon: SVG_FLAME,
+    accentColor: '#854F0B',
+    dotColor: '#f59e0b',
+    isMultiTier: false,
+    typePatterns: ['PP','DD'],
+  },
+  youfibre: {
+    name: 'YouFibre',
+    icon: SVG_WIFI,
+    accentColor: '#5b1fd6',
+    dotColor: '#8b5cf6',
+    isMultiTier: false,
+    typePatterns: ['1GB','2GB'],
+  },
+  charities: {
+    name: 'Charities',
+    icon: SVG_HEART,
+    accentColor: '#A32D2D',
+    dotColor: '#e24b4a',
+    isMultiTier: false,
+    typePatterns: ['£10','£12','10','12'],
+  },
+};
+
+function detectCampaign(r) {
+  const t1 = clean(r['Type 1']).toUpperCase();
+  const t2 = clean(r['Type 2']).toUpperCase();
   const t3 = clean(r['Type 3']);
   const t4 = clean(r['Type 4']);
-  // WightFibre rows have type labels that look like speed values (150/300/500/900)
-  // or Type 3 / Type 4 are non-zero
-  return (t3 && t3 !== '0') || (t4 && t4 !== '0') ||
-    ['150','300','500','900'].includes(t1);
+
+  // WightFibre: has 4 tiers or type values are speed numbers
+  if ((t3 && t3 !== '0') || (t4 && t4 !== '0') ||
+      ['150','300','500','900'].includes(t1)) {
+    return CAMPAIGN_CONFIGS.wightfibre;
+  }
+  // Scottish Power: PP or DD
+  if (['PP','DD'].includes(t1) || ['PP','DD'].includes(t2)) {
+    return CAMPAIGN_CONFIGS.scottishpower;
+  }
+  // YouFibre: 1GB or 2GB
+  if (['1GB','2GB'].includes(t1) || ['1GB','2GB'].includes(t2)) {
+    return CAMPAIGN_CONFIGS.youfibre;
+  }
+  // Charities: £10, £12, or numeric 10/12
+  if (['£10','£12','10','12'].includes(t1) || ['£10','£12','10','12'].includes(t2)) {
+    return CAMPAIGN_CONFIGS.charities;
+  }
+  // Fallback: use first type value as name
+  return {
+    name: clean(r['Type 1']) || 'Campaign',
+    icon: SVG_TAG,
+    accentColor: '#0f766e',
+    dotColor: '#0f766e',
+    isMultiTier: false,
+  };
 }
 
 /* ── Count-up ── */
@@ -681,11 +746,11 @@ function avatarStyle(nameOrIdx) {
 }
 
 /* ── Build compact performance table (works for 1–4 tiers) ── */
-function perfTable(campaignName, tiers, icon) {
-  // tiers: [{ label, sub, pay }]
+function perfTable(config, tiers) {
   const totalSub = tiers.reduce((s, t) => s + num(t.sub), 0);
   const totalPay = tiers.reduce((s, t) => s + num(t.pay), 0);
   const totalCan = totalSub - totalPay;
+  const multiTier = tiers.length > 1;
 
   const rows = tiers.map(t => {
     const s = num(t.sub);
@@ -695,7 +760,7 @@ function perfTable(campaignName, tiers, icon) {
     return `
       <div class="perf-table-row">
         <div class="perf-table-tier">
-          <div class="perf-table-tier-dot"></div>
+          <div class="perf-table-tier-dot" style="background:${config.dotColor}"></div>
           <span class="perf-table-tier-label">${t.label}</span>
         </div>
         ${fmtCell(s, 'sub')}
@@ -704,19 +769,20 @@ function perfTable(campaignName, tiers, icon) {
       </div>`;
   }).join('');
 
-  const multiTier = tiers.length > 1;
   const badgeText = multiTier
     ? `${tiers.length} types · ${totalPay} payable`
     : `${totalPay} payable`;
+
+  const iconStyled = config.icon.replace('stroke="currentColor"', `stroke="${config.accentColor}"`);
 
   return `
     <div class="card perf-table-card">
       <div class="perf-table-header">
         <div class="perf-table-campaign">
-          ${icon}
-          <span class="perf-table-name">${campaignName}</span>
+          ${iconStyled}
+          <span class="perf-table-name">${config.name}</span>
         </div>
-        <span class="perf-table-badge">${badgeText}</span>
+        <span class="perf-table-badge" style="background:${config.accentColor}1a;color:${config.accentColor};border-color:${config.accentColor}33">${badgeText}</span>
       </div>
       <div class="perf-table-cols">
         <div class="perf-table-col-lbl">Type</div>
@@ -737,25 +803,27 @@ function perfTable(campaignName, tiers, icon) {
 
 /* ── Build performance section for a rep row ── */
 function perfSection(r, multiCampaign, idx) {
-  const wf = isWightFibre(r);
+  const config = detectCampaign(r);
   const campaignSuffix = multiCampaign ? ` · Campaign ${idx + 1}` : '';
 
-  if (wf) {
+  if (config.isMultiTier) {
+    // WightFibre: 4 speed tiers
+    const suffix = config.tierSuffix || '';
     const tiers = [
-      { label: clean(r['Type 1']) + ' Mbps', sub: r['Submitted 1'], pay: r['Payable 1'] },
-      { label: clean(r['Type 2']) + ' Mbps', sub: r['Submitted 2'], pay: r['Payable 2'] },
-      { label: clean(r['Type 3']) + ' Mbps', sub: r['Submitted 3'], pay: r['Payable 3'] },
-      { label: clean(r['Type 4']) + ' Mbps', sub: r['Submitted 4'], pay: r['Payable 4'] },
-    ].filter(t => !t.label.startsWith('0'));
+      { label: clean(r['Type 1']) + suffix, sub: r['Submitted 1'], pay: r['Payable 1'] },
+      { label: clean(r['Type 2']) + suffix, sub: r['Submitted 2'], pay: r['Payable 2'] },
+      { label: clean(r['Type 3']) + suffix, sub: r['Submitted 3'], pay: r['Payable 3'] },
+      { label: clean(r['Type 4']) + suffix, sub: r['Submitted 4'], pay: r['Payable 4'] },
+    ].filter(t => !t.label.startsWith('0') && clean(t.label) !== suffix.trim());
 
     return `
       <section class="section">
-        <p class="section-label">WightFibre Doors${campaignSuffix}</p>
-        ${perfTable('WightFibre Doors', tiers, SVG_WIFI)}
+        <p class="section-label">${config.name}${campaignSuffix}</p>
+        ${perfTable(config, tiers)}
       </section>`;
   }
 
-  // Standard: 1 or 2 types — show as a single table
+  // Standard: 1 or 2 types
   const types = [
     { label: clean(r['Type 1']), sub: r['Submitted 1'], pay: r['Payable 1'] },
     { label: clean(r['Type 2']), sub: r['Submitted 2'], pay: r['Payable 2'] },
@@ -763,15 +831,10 @@ function perfSection(r, multiCampaign, idx) {
 
   if (!types.length) return '';
 
-  const campaignName = types[0].label;
-  const sectionLabel = types.length > 1
-    ? `${types[0].label} · ${types[1].label}${campaignSuffix}`
-    : `${campaignName}${campaignSuffix}`;
-
   return `
     <section class="section">
-      <p class="section-label">${sectionLabel}</p>
-      ${perfTable(campaignName, types, SVG_TAG)}
+      <p class="section-label">${config.name}${campaignSuffix}</p>
+      ${perfTable(config, types)}
     </section>`;
 }
 
