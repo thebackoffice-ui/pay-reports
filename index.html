@@ -738,7 +738,7 @@ function avatarStyle(nameOrIdx) {
 }
 
 /* ── Build compact performance table (works for 1–4 tiers) ── */
-function perfTable(config, tiers) {
+function perfTable(config, tiers, campaignNum) {
   const totalSub = tiers.reduce((s, t) => s + num(t.sub), 0);
   const totalPay = tiers.reduce((s, t) => s + num(t.pay), 0);
   const totalCan = totalSub - totalPay;
@@ -761,11 +761,19 @@ function perfTable(config, tiers) {
       </div>`;
   }).join('');
 
+  const badgePayable = Math.max(0, totalPay);
+  const badgeNeutral = totalPay <= 0;
   const badgeText = multiTier
-    ? `${tiers.length} types · ${totalPay} payable`
-    : `${totalPay} payable`;
+    ? `${tiers.length} types · ${badgePayable} payable`
+    : `${badgePayable} payable`;
+  const badgeStyle = badgeNeutral
+    ? `background:var(--bg);color:var(--muted);border-color:var(--border-md)`
+    : `background:${config.accentColor}1a;color:${config.accentColor};border-color:${config.accentColor}33`;
 
   const iconStyled = config.icon.replace('stroke="currentColor"', `stroke="${config.accentColor}"`);
+  const campaignChip = campaignNum != null
+    ? `<span style="font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--bg);color:var(--soft);border:1px solid var(--border-md);letter-spacing:0.06em;margin-left:6px">C${campaignNum}</span>`
+    : '';
 
   return `
     <div class="card perf-table-card">
@@ -773,13 +781,14 @@ function perfTable(config, tiers) {
         <div class="perf-table-campaign">
           ${iconStyled}
           <span class="perf-table-name">${config.name}</span>
+          ${campaignChip}
         </div>
-        <span class="perf-table-badge" style="background:${config.accentColor}1a;color:${config.accentColor};border-color:${config.accentColor}33">${badgeText}</span>
+        <span class="perf-table-badge" style="${badgeStyle}">${badgeText}</span>
       </div>
       <div class="perf-table-cols">
         <div class="perf-table-col-lbl">Type</div>
         <div class="perf-table-col-lbl">Sub</div>
-        <div class="perf-table-col-lbl">Cancelled</div>
+        <div class="perf-table-col-lbl">Can</div>
         <div class="perf-table-col-lbl">Payable</div>
       </div>
       ${rows}
@@ -796,10 +805,9 @@ function perfTable(config, tiers) {
 /* ── Build performance section for a rep row ── */
 function perfSection(r, multiCampaign, idx) {
   const config = detectCampaign(r);
-  const campaignSuffix = multiCampaign ? ` · Campaign ${idx + 1}` : '';
+  const campaignNum = multiCampaign ? (idx + 1) : null;
 
   if (config.isMultiTier) {
-    // WightFibre: 4 speed tiers
     const suffix = config.tierSuffix || '';
     const tiers = [
       { label: clean(r['Type 1']) + suffix, sub: r['Submitted 1'], pay: r['Payable 1'] },
@@ -808,14 +816,9 @@ function perfSection(r, multiCampaign, idx) {
       { label: clean(r['Type 4']) + suffix, sub: r['Submitted 4'], pay: r['Payable 4'] },
     ].filter(t => !t.label.startsWith('0') && clean(t.label) !== suffix.trim());
 
-    return `
-      <section class="section">
-        <p class="section-label">${config.name}${campaignSuffix}</p>
-        ${perfTable(config, tiers)}
-      </section>`;
+    return `<section class="section">${perfTable(config, tiers, campaignNum)}</section>`;
   }
 
-  // Standard: 1 or 2 types
   const types = [
     { label: clean(r['Type 1']), sub: r['Submitted 1'], pay: r['Payable 1'] },
     { label: clean(r['Type 2']), sub: r['Submitted 2'], pay: r['Payable 2'] },
@@ -823,11 +826,7 @@ function perfSection(r, multiCampaign, idx) {
 
   if (!types.length) return '';
 
-  return `
-    <section class="section">
-      <p class="section-label">${config.name}${campaignSuffix}</p>
-      ${perfTable(config, types)}
-    </section>`;
+  return `<section class="section">${perfTable(config, types, campaignNum)}</section>`;
 }
 
 /* ── Rep render ── */
@@ -835,7 +834,15 @@ function render(rows) {
   const d = rows[0];
   const nameVal   = clean(d['Name']);
   const officeVal = clean(d['Office']);
-  const payWeek   = clean(d['Date'] || d['Pay Week'] || '');
+  const payWeekRaw = clean(d['Date'] || d['Pay Week'] || '');
+  // Format date nicely: try to parse DD/MM/YYYY → "25 May 2026", fallback to raw
+  function fmtPayWeek(raw) {
+    const m = raw.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+    if (!m) return raw.replace(/^pay week[:\s]*/i, '').trim();
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${parseInt(m[1])} ${months[parseInt(m[2])-1]} ${m[3]}`;
+  }
+  const payWeek = fmtPayWeek(payWeekRaw);
   const multiCampaign = rows.length > 1;
 
   const totalPay    = rows.reduce((s, r) => s + num(r['Total Pay']), 0);
