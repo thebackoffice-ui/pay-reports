@@ -756,8 +756,8 @@ function perfTable(config, tiers) {
           <span class="perf-table-tier-label">${t.label}</span>
         </div>
         ${fmtCell(s, 'sub')}
-        ${fmtCell(p, 'pay')}
         ${fmtCell(c, 'can')}
+        ${fmtCell(p, 'pay')}
       </div>`;
   }).join('');
 
@@ -779,16 +779,16 @@ function perfTable(config, tiers) {
       <div class="perf-table-cols">
         <div class="perf-table-col-lbl">Type</div>
         <div class="perf-table-col-lbl">Sub</div>
-        <div class="perf-table-col-lbl">Payable</div>
         <div class="perf-table-col-lbl">Cancelled</div>
+        <div class="perf-table-col-lbl">Payable</div>
       </div>
       ${rows}
       ${multiTier ? `
       <div class="perf-table-totals">
         <div class="perf-table-totals-lbl">Total</div>
         <div class="perf-table-totals-val">${totalSub || '—'}</div>
-        <div class="perf-table-totals-val">${totalPay || '—'}</div>
         <div class="perf-table-totals-val can">${totalCan > 0 ? totalCan : '—'}</div>
+        <div class="perf-table-totals-val">${totalPay || '—'}</div>
       </div>` : ''}
     </div>`;
 }
