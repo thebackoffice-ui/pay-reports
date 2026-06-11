@@ -215,85 +215,105 @@ body {
   font-weight: 700; margin: 0 0 9px;
 }
 
-/* ── Campaign group header (WightFibre style) ── */
-.campaign-group { margin-bottom: 14px; }
+/* ── Compact performance table ── */
+.perf-table-card { overflow: hidden; }
 
-.campaign-group-header {
-  display: flex; align-items: center; gap: 8px;
-  padding: 9px 13px;
-  background: #0f1923;
-  border-radius: 10px 10px 0 0;
-  margin-bottom: 0;
-}
-
-.campaign-group-name {
-  font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  color: rgba(255,255,255,0.85);
-}
-
-.campaign-group-badge {
-  margin-left: auto;
-  font-size: 10px; font-weight: 700;
-  padding: 3px 8px; border-radius: 999px;
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.7);
-  letter-spacing: 0.08em;
-}
-
-.campaign-group-cards {
-  border: 1px solid var(--border);
-  border-top: none;
-  border-radius: 0 0 10px 10px;
-  overflow: hidden;
-}
-
-/* ── Speed tier pill ── */
-.tier-pill {
-  display: inline-flex; align-items: center;
-  padding: 2px 8px; border-radius: 999px;
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.06em;
-  background: rgba(15,118,110,0.10);
-  color: #0f766e;
-  border: 0.5px solid rgba(15,118,110,0.22);
-  margin-left: 6px;
-}
-
-.perf-type-bar {
-  padding: 10px 15px; background: #f0f3f6;
+.perf-table-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 15px 10px;
   border-bottom: 1px solid var(--border);
+}
+
+.perf-table-campaign {
   display: flex; align-items: center; gap: 7px;
 }
 
-/* When inside a campaign group, no top radius */
-.campaign-group-cards .perf-card { border-radius: 0; border: none; border-bottom: 1px solid var(--border); box-shadow: none; }
-.campaign-group-cards .perf-card:last-child { border-bottom: none; }
-.campaign-group-cards .perf-card .perf-type-bar { border-radius: 0; }
+.perf-table-campaign svg { width: 13px; height: 13px; stroke: var(--muted); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
-.perf-type-bar svg { width: 13px; height: 13px; stroke: #475569; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.perf-type-name { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: #475569; }
-
-.perf-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 13px 15px; border-bottom: 0.5px solid var(--border);
-}
-.perf-row:last-child { border-bottom: none; }
-
-.perf-icon {
-  width: 33px; height: 33px; border-radius: 9px;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+.perf-table-name {
+  font-size: 13px; font-weight: 700; color: var(--text);
 }
 
-.perf-icon svg { width: 15px; height: 15px; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-.perf-icon.amb { background: var(--amber-bg); } .perf-icon.amb svg { stroke: var(--amber); }
-.perf-icon.grn { background: var(--green-bg); } .perf-icon.grn svg { stroke: var(--green); }
-.perf-icon.red { background: var(--red-bg);   } .perf-icon.red svg { stroke: var(--red); }
+.perf-table-badge {
+  font-size: 10px; font-weight: 700;
+  padding: 3px 8px; border-radius: 999px;
+  background: var(--blue-bg);
+  color: var(--blue);
+  border: 0.5px solid var(--blue-bd);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
 
-.perf-mid { flex: 1; min-width: 0; }
-.perf-name { font-size: 13.5px; font-weight: 600; color: var(--text); line-height: 1.2; }
-.perf-sub  { font-size: 11.5px; color: var(--soft); font-weight: 500; margin-top: 2px; }
-.perf-val  { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: var(--text); }
+/* Column headers */
+.perf-table-cols {
+  display: grid;
+  grid-template-columns: 1fr 56px 56px 64px;
+  padding: 6px 15px 6px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.perf-table-col-lbl {
+  font-size: 9.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--soft); text-align: right;
+}
+.perf-table-col-lbl:first-child { text-align: left; }
+
+/* Data rows */
+.perf-table-row {
+  display: grid;
+  grid-template-columns: 1fr 56px 56px 64px;
+  padding: 10px 15px;
+  border-bottom: 0.5px solid var(--border);
+  align-items: center;
+}
+.perf-table-row:last-child { border-bottom: none; }
+
+.perf-table-tier {
+  display: flex; align-items: center; gap: 6px;
+}
+
+.perf-table-tier-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  background: var(--blue);
+}
+
+.perf-table-tier-label {
+  font-size: 13px; font-weight: 600; color: var(--text);
+}
+
+.perf-table-cell {
+  text-align: right;
+  font-size: 15px; font-weight: 600; color: var(--text);
+}
+
+.perf-table-cell.sub  { color: var(--muted); }
+.perf-table-cell.pay  { color: var(--green); }
+.perf-table-cell.can  { color: var(--red); }
+.perf-table-cell.zero { color: var(--soft); font-weight: 500; }
+
+/* Totals footer row */
+.perf-table-totals {
+  display: grid;
+  grid-template-columns: 1fr 56px 56px 64px;
+  padding: 10px 15px;
+  background: #0f1923;
+  border-radius: 0 0 10px 10px;
+}
+
+.perf-table-totals-lbl {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.45);
+  align-self: center;
+}
+
+.perf-table-totals-val {
+  text-align: right;
+  font-size: 15px; font-weight: 700; color: #fff;
+}
+.perf-table-totals-val.can { color: #F7C1C1; }
 
 .earn-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .earn-box { padding: 14px 14px 12px; }
@@ -660,80 +680,99 @@ function avatarStyle(nameOrIdx) {
   return `background:${c.bg};color:${c.color};border:none;font-weight:700;`;
 }
 
-/* ── Build a single perf card ── */
-function perfCard(typeLabel, sub, pay, can, inGroup) {
-  const cancelledVal = num(sub) - num(pay);
+/* ── Build compact performance table (works for 1–4 tiers) ── */
+function perfTable(campaignName, tiers, icon) {
+  // tiers: [{ label, sub, pay }]
+  const totalSub = tiers.reduce((s, t) => s + num(t.sub), 0);
+  const totalPay = tiers.reduce((s, t) => s + num(t.pay), 0);
+  const totalCan = totalSub - totalPay;
+
+  const rows = tiers.map(t => {
+    const s = num(t.sub);
+    const p = num(t.pay);
+    const c = s - p;
+    const fmtCell = (v, cls) => `<div class="perf-table-cell ${cls}${v === 0 ? ' zero' : ''}">${v === 0 ? '—' : v}</div>`;
+    return `
+      <div class="perf-table-row">
+        <div class="perf-table-tier">
+          <div class="perf-table-tier-dot"></div>
+          <span class="perf-table-tier-label">${t.label}</span>
+        </div>
+        ${fmtCell(s, 'sub')}
+        ${fmtCell(p, 'pay')}
+        ${fmtCell(c, 'can')}
+      </div>`;
+  }).join('');
+
+  const multiTier = tiers.length > 1;
+  const badgeText = multiTier
+    ? `${tiers.length} types · ${totalPay} payable`
+    : `${totalPay} payable`;
+
   return `
-    <div class="perf-card${inGroup ? '' : ' card'}">
-      <div class="perf-type-bar${inGroup ? '' : ' ' + 'border-radius-top'}">${SVG_TAG}<span class="perf-type-name">${typeLabel}</span></div>
-      <div class="perf-row">
-        <div class="perf-icon amb">${SVG_SEND}</div>
-        <div class="perf-mid"><div class="perf-name">Submitted</div><div class="perf-sub">Total leads</div></div>
-        <div class="perf-val">${clean(sub) === '0' ? '—' : clean(sub)}</div>
+    <div class="card perf-table-card">
+      <div class="perf-table-header">
+        <div class="perf-table-campaign">
+          ${icon}
+          <span class="perf-table-name">${campaignName}</span>
+        </div>
+        <span class="perf-table-badge">${badgeText}</span>
       </div>
-      <div class="perf-row">
-        <div class="perf-icon grn">${SVG_CHECK}</div>
-        <div class="perf-mid"><div class="perf-name">Payable</div><div class="perf-sub">Approved for pay</div></div>
-        <div class="perf-val">${clean(pay) === '0' ? '—' : clean(pay)}</div>
+      <div class="perf-table-cols">
+        <div class="perf-table-col-lbl">Type</div>
+        <div class="perf-table-col-lbl">Sub</div>
+        <div class="perf-table-col-lbl">Paid</div>
+        <div class="perf-table-col-lbl">Cancelled</div>
       </div>
-      <div class="perf-row">
-        <div class="perf-icon red">${SVG_X}</div>
-        <div class="perf-mid"><div class="perf-name">Cancelled</div><div class="perf-sub">Not payable this week</div></div>
-        <div class="perf-val">${cancelledVal <= 0 ? '—' : cancelledVal}</div>
-      </div>
+      ${rows}
+      ${multiTier ? `
+      <div class="perf-table-totals">
+        <div class="perf-table-totals-lbl">Total</div>
+        <div class="perf-table-totals-val">${totalSub || '—'}</div>
+        <div class="perf-table-totals-val">${totalPay || '—'}</div>
+        <div class="perf-table-totals-val can">${totalCan > 0 ? totalCan : '—'}</div>
+      </div>` : ''}
     </div>`;
 }
 
-/* ── Build performance sections for a rep row ── */
+/* ── Build performance section for a rep row ── */
 function perfSection(r, multiCampaign, idx) {
   const wf = isWightFibre(r);
+  const campaignSuffix = multiCampaign ? ` · Campaign ${idx + 1}` : '';
 
   if (wf) {
-    // WightFibre: up to 4 tier cards grouped under one header
     const tiers = [
-      { key: '1', label: clean(r['Type 1']), sub: r['Submitted 1'], pay: r['Payable 1'] },
-      { key: '2', label: clean(r['Type 2']), sub: r['Submitted 2'], pay: r['Payable 2'] },
-      { key: '3', label: clean(r['Type 3']), sub: r['Submitted 3'], pay: r['Payable 3'] },
-      { key: '4', label: clean(r['Type 4']), sub: r['Submitted 4'], pay: r['Payable 4'] },
-    ].filter(t => t.label && t.label !== '0');
-
-    const totalSub = tiers.reduce((s, t) => s + num(t.sub), 0);
-    const totalPay = tiers.reduce((s, t) => s + num(t.pay), 0);
-
-    const tierCards = tiers.map(t => {
-      const tierLabel = `${t.label} Mbps`;
-      return perfCard(tierLabel, t.sub, t.pay, null, true);
-    }).join('');
-
-    const campaignLabel = multiCampaign ? ` · Campaign ${idx + 1}` : '';
+      { label: clean(r['Type 1']) + ' Mbps', sub: r['Submitted 1'], pay: r['Payable 1'] },
+      { label: clean(r['Type 2']) + ' Mbps', sub: r['Submitted 2'], pay: r['Payable 2'] },
+      { label: clean(r['Type 3']) + ' Mbps', sub: r['Submitted 3'], pay: r['Payable 3'] },
+      { label: clean(r['Type 4']) + ' Mbps', sub: r['Submitted 4'], pay: r['Payable 4'] },
+    ].filter(t => !t.label.startsWith('0'));
 
     return `
       <section class="section">
-        <p class="section-label">WightFibre Doors performance${campaignLabel}</p>
-        <div class="campaign-group">
-          <div class="campaign-group-header">
-            ${SVG_WIFI}
-            <span class="campaign-group-name">WightFibre Doors</span>
-            <span class="campaign-group-badge">${tiers.length} tiers · ${totalPay} payable</span>
-          </div>
-          <div class="campaign-group-cards">
-            ${tierCards}
-          </div>
-        </div>
+        <p class="section-label">WightFibre Doors${campaignSuffix}</p>
+        ${perfTable('WightFibre Doors', tiers, SVG_WIFI)}
       </section>`;
   }
 
-  // Standard 2-type layout (existing behaviour)
+  // Standard: 1 or 2 types — show as a single table
   const types = [
-    { key: '1', type: clean(r['Type 1']), sub: r['Submitted 1'], pay: r['Payable 1'] },
-    { key: '2', type: clean(r['Type 2']), sub: r['Submitted 2'], pay: r['Payable 2'] },
-  ].filter(t => t.type && t.type !== '0');
+    { label: clean(r['Type 1']), sub: r['Submitted 1'], pay: r['Payable 1'] },
+    { label: clean(r['Type 2']), sub: r['Submitted 2'], pay: r['Payable 2'] },
+  ].filter(t => t.label && t.label !== '0');
 
-  return types.map((t, ti) => `
+  if (!types.length) return '';
+
+  const campaignName = types[0].label;
+  const sectionLabel = types.length > 1
+    ? `${types[0].label} · ${types[1].label}${campaignSuffix}`
+    : `${campaignName}${campaignSuffix}`;
+
+  return `
     <section class="section">
-      <p class="section-label">${t.type} performance${multiCampaign && ti === 0 ? ` <span style="opacity:0.6;font-weight:500">· Campaign ${idx + 1}</span>` : ''}</p>
-      ${perfCard(t.type, t.sub, t.pay, null, false)}
-    </section>`).join('');
+      <p class="section-label">${sectionLabel}</p>
+      ${perfTable(campaignName, types, SVG_TAG)}
+    </section>`;
 }
 
 /* ── Rep render ── */
