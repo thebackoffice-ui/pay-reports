@@ -596,69 +596,61 @@ function initials(name) {
    Returns { name, icon, color, isMultiTier }
    based on the type values in the row.
 ──────────────────────────────────────────── */
-const SVG_FLAME  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 0-5 4.5-5 9a5 5 0 0010 0c0-4.5-5-9-5-9z"/><path d="M12 12c0 0-2 1.5-2 3a2 2 0 004 0c0-1.5-2-3-2-3z"/></svg>`;
-const SVG_HEART  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`;
-
-const CAMPAIGN_CONFIGS = {
-  wightfibre: {
-    name: 'WightFibre Doors',
-    icon: SVG_WIFI,
-    accentColor: '#0369A1',
-    dotColor: '#0ea5e9',
-    isMultiTier: true,
-    tierSuffix: ' Mbps',
-    typePatterns: ['150','300','500','900'],
-  },
-  scottishpower: {
-    name: 'Scottish Power',
-    icon: SVG_FLAME,
-    accentColor: '#854F0B',
-    dotColor: '#f59e0b',
-    isMultiTier: false,
-    typePatterns: ['PP','DD'],
-  },
-  youfibre: {
-    name: 'YouFibre',
-    icon: SVG_WIFI,
-    accentColor: '#5b1fd6',
-    dotColor: '#8b5cf6',
-    isMultiTier: false,
-    typePatterns: ['1GB','2GB'],
-  },
-  charities: {
-    name: 'Charities',
-    icon: SVG_HEART,
-    accentColor: '#A32D2D',
-    dotColor: '#e24b4a',
-    isMultiTier: false,
-    typePatterns: ['£10','£12','10','12'],
-  },
-};
+function getCampaignConfigs() {
+  const SVG_FLAME = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 0-5 4.5-5 9a5 5 0 0010 0c0-4.5-5-9-5-9z"/><path d="M12 12c0 0-2 1.5-2 3a2 2 0 004 0c0-1.5-2-3-2-3z"/></svg>`;
+  const SVG_HEART = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`;
+  return {
+    wightfibre: {
+      name: 'WightFibre Doors',
+      icon: SVG_WIFI,
+      accentColor: '#0369A1',
+      dotColor: '#0ea5e9',
+      isMultiTier: true,
+      tierSuffix: ' Mbps',
+    },
+    scottishpower: {
+      name: 'Scottish Power',
+      icon: SVG_FLAME,
+      accentColor: '#854F0B',
+      dotColor: '#f59e0b',
+      isMultiTier: false,
+    },
+    youfibre: {
+      name: 'YouFibre',
+      icon: SVG_WIFI,
+      accentColor: '#5b1fd6',
+      dotColor: '#8b5cf6',
+      isMultiTier: false,
+    },
+    charities: {
+      name: 'Charities',
+      icon: SVG_HEART,
+      accentColor: '#A32D2D',
+      dotColor: '#e24b4a',
+      isMultiTier: false,
+    },
+  };
+}
 
 function detectCampaign(r) {
+  const cfg = getCampaignConfigs();
   const t1 = clean(r['Type 1']).toUpperCase();
   const t2 = clean(r['Type 2']).toUpperCase();
   const t3 = clean(r['Type 3']);
   const t4 = clean(r['Type 4']);
 
-  // WightFibre: has 4 tiers or type values are speed numbers
-  if ((t3 && t3 !== '0') || (t4 && t4 !== '0') ||
-      ['150','300','500','900'].includes(t1)) {
-    return CAMPAIGN_CONFIGS.wightfibre;
+  if ((t3 && t3 !== '0') || (t4 && t4 !== '0') || ['150','300','500','900'].includes(t1)) {
+    return cfg.wightfibre;
   }
-  // Scottish Power: PP or DD
   if (['PP','DD'].includes(t1) || ['PP','DD'].includes(t2)) {
-    return CAMPAIGN_CONFIGS.scottishpower;
+    return cfg.scottishpower;
   }
-  // YouFibre: 1GB or 2GB
   if (['1GB','2GB'].includes(t1) || ['1GB','2GB'].includes(t2)) {
-    return CAMPAIGN_CONFIGS.youfibre;
+    return cfg.youfibre;
   }
-  // Charities: £10, £12, or numeric 10/12
   if (['£10','£12','10','12'].includes(t1) || ['£10','£12','10','12'].includes(t2)) {
-    return CAMPAIGN_CONFIGS.charities;
+    return cfg.charities;
   }
-  // Fallback: use first type value as name
   return {
     name: clean(r['Type 1']) || 'Campaign',
     icon: SVG_TAG,
