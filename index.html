@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,7 +46,7 @@
 html { font-size: 15px; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -111,7 +111,7 @@ body {
   background: transparent;
   border: none;
   cursor: pointer; outline: none;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   appearance: none; -webkit-appearance: none;
   padding: 0;
 }
@@ -247,15 +247,15 @@ body {
 /* Column headers */
 .perf-table-cols {
   display: grid;
-  grid-template-columns: 1fr 56px 56px 64px;
-  padding: 6px 15px 6px;
+  grid-template-columns: 1fr 52px 64px 64px;
+  padding: 6px 15px;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
 
 .perf-table-col-lbl {
-  font-size: 9.5px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em;
+  font-size: 9px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
   color: var(--soft); text-align: right;
 }
 .perf-table-col-lbl:first-child { text-align: left; }
@@ -263,7 +263,7 @@ body {
 /* Data rows */
 .perf-table-row {
   display: grid;
-  grid-template-columns: 1fr 56px 56px 64px;
+  grid-template-columns: 1fr 52px 64px 64px;
   padding: 10px 15px;
   border-bottom: 0.5px solid var(--border);
   align-items: center;
@@ -296,7 +296,7 @@ body {
 /* Totals footer row */
 .perf-table-totals {
   display: grid;
-  grid-template-columns: 1fr 56px 56px 64px;
+  grid-template-columns: 1fr 52px 64px 64px;
   padding: 10px 15px;
   background: #0f1923;
   border-radius: 0 0 10px 10px;
@@ -343,7 +343,7 @@ body {
 .btn {
   display: flex; align-items: center; justify-content: center; gap: 7px;
   width: 100%; padding: 14px 16px; border: none; border-radius: 10px;
-  font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600;
+  font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600;
   cursor: pointer; transition: opacity 0.15s ease, transform 0.1s ease;
   -webkit-font-smoothing: antialiased; text-decoration: none;
 }
@@ -381,7 +381,7 @@ body {
 .search-input {
   width: 100%; padding: 11px 12px 11px 36px;
   border: 1px solid var(--border-md); border-radius: 12px;
-  font-family: 'DM Sans', sans-serif; font-size: 13.5px;
+  font-family: 'Inter', sans-serif; font-size: 13.5px;
   background: var(--card); color: var(--text); outline: none;
   transition: border-color 0.15s ease;
 }
@@ -721,7 +721,7 @@ function perfTable(campaignName, tiers, icon) {
       <div class="perf-table-cols">
         <div class="perf-table-col-lbl">Type</div>
         <div class="perf-table-col-lbl">Sub</div>
-        <div class="perf-table-col-lbl">Paid</div>
+        <div class="perf-table-col-lbl">Payable</div>
         <div class="perf-table-col-lbl">Cancelled</div>
       </div>
       ${rows}
@@ -1233,12 +1233,16 @@ async function loadRepHistory() {
         const text = await (await fetch(w.url)).text();
         const rows = parseCSV(text);
         const headers = rows[0].map(h => h.trim());
-        const match = rows.slice(1).find(r => r[0]?.trim().toLowerCase() === nameParam.trim().toLowerCase());
-        if (!match) return { label: w.label, pay: 0, found: false, idx: i };
-        const d = {};
-        headers.forEach((h, i) => d[h] = match[i]);
+        // sum ALL rows matching this rep name (covers multi-campaign reps)
+        const matches = rows.slice(1).filter(r => r[0]?.trim().toLowerCase() === nameParam.trim().toLowerCase());
+        if (!matches.length) return { label: w.label, pay: 0, found: false, idx: i };
+        const totalPay = matches.reduce((s, r) => {
+          const d = {};
+          headers.forEach((h, j) => d[h] = r[j]);
+          return s + num(d['Total Pay']);
+        }, 0);
         repWeeksWithData.add(i);
-        return { label: w.label, pay: num(d['Total Pay']), found: true, idx: i };
+        return { label: w.label, pay: totalPay, found: true, idx: i };
       } catch { return { label: w.label, pay: 0, found: false, idx: i }; }
     })
   );
@@ -1321,7 +1325,7 @@ async function loadData(sheetUrl) {
           <div style="font-size:32px;margin-bottom:4px;">📭</div>
           <strong style="font-size:15px;color:var(--text);">No data this week</strong>
           <span style="font-size:13px;color:var(--muted);margin-top:4px;">${activeLabel}</span>
-          <button onclick="switchWeek(${lastGoodIndex})" style="margin-top:18px;background:var(--blue);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:11px 22px;border-radius:12px;cursor:pointer;">← Back to ${weekIndex[lastGoodIndex]?.label || 'latest week'}</button>
+          <button onclick="switchWeek(${lastGoodIndex})" style="margin-top:18px;background:var(--blue);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;padding:11px 22px;border-radius:12px;cursor:pointer;">← Back to ${weekIndex[lastGoodIndex]?.label || 'latest week'}</button>
         </div>`;
       return;
     }
