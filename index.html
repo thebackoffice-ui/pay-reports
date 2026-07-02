@@ -3,44 +3,40 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #f0f3f6;
+  --bg: #eff4f4;
   --card: #ffffff;
-  --border: #e8ecee;
-  --border-md: rgba(15,25,35,0.12);
-  --text: #0f1923;
-  --muted: #6b7d8a;
-  --soft: #a0b0ba;
+  --border: rgba(14,26,26,0.08);
+  --border-md: rgba(14,26,26,0.12);
+  --text: #0e1a1a;
+  --muted: #5a7070;
+  --soft: #90acac;
 
-  --blue: #0f766e;
-  --blue-bg: rgba(15,118,110,0.08);
-  --blue-bd: rgba(15,118,110,0.18);
+  --blue: #11766e;
+  --blue-bg: rgba(17,118,110,0.08);
+  --blue-bd: rgba(17,118,110,0.25);
 
-  --green: #3B6D11;
-  --green-bg: #EAF3DE;
-  --green-bd: #C0DD97;
-  --green-bar: #639922;
+  --green: #16a34a;
+  --green-bg: rgba(34,197,94,0.12);
+  --green-bd: rgba(34,197,94,0.32);
+  --green-bar: #22c55e;
 
-  --amber: #854F0B;
-  --amber-bg: #FAEEDA;
-  --amber-bd: #FAC775;
-  --amber-bar: #BA7517;
+  --amber: #d97706;
+  --amber-bg: rgba(245,158,11,0.14);
+  --amber-bd: rgba(245,158,11,0.35);
+  --amber-bar: #f59e0b;
 
-  --red: #A32D2D;
-  --red-bg: #FCEBEB;
-  --red-bd: #F7C1C1;
-  --red-bar: #E24B4A;
+  --red: #dc2626;
+  --red-bg: rgba(239,68,68,0.12);
+  --red-bd: rgba(239,68,68,0.32);
+  --red-bar: #ef4444;
 
-  --av0-bg: #a7ffdb; --av0-c: #007a4d;
-  --av1-bg: #b3d4ff; --av1-c: #1140cc;
-  --av2-bg: #d4b8ff; --av2-c: #5b1fd6;
-  --av3-bg: #ffe0a0; --av3-c: #b85c00;
-  --av4-bg: #ffb8cc; --av4-c: #c4002e;
+  --dark-band: #003f45;
 }
 
 html { font-size: 15px; }
@@ -57,6 +53,7 @@ body {
 
 .wrap { max-width: 480px; margin: 0 auto; }
 
+/* ── Topbar ── */
 .topbar {
   display: flex;
   align-items: center;
@@ -75,7 +72,7 @@ body {
 
 .brand-icon {
   width: 24px; height: 24px;
-  background: #0f766e;
+  background: var(--blue);
   border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
 }
@@ -90,39 +87,34 @@ body {
   font-size: 12px; font-weight: 600;
   color: var(--blue);
   background: var(--blue-bg);
-  border: 1px solid var(--blue-bd);
+  border: 0.5px solid var(--blue-bd);
   padding: 6px 12px; border-radius: 999px;
-}
-
-.week-select-wrap {
-  display: inline-flex;
-  align-items: center;
-  background: var(--blue-bg);
-  border: 1px solid var(--blue-bd);
-  border-radius: 999px;
-  padding: 0 12px;
-  height: 32px;
-  gap: 5px;
 }
 
 .week-select {
   font-size: 12px; font-weight: 600;
   color: var(--blue);
-  background: transparent;
-  border: none;
+  background: var(--blue-bg);
+  border: 0.5px solid var(--blue-bd);
+  padding: 6px 12px; border-radius: 999px;
   cursor: pointer; outline: none;
   font-family: 'Inter', sans-serif;
   appearance: none; -webkit-appearance: none;
-  padding: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2311766e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
 }
 
+/* ── Card ── */
 .card {
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  box-shadow: none;
 }
 
+/* ── Hero ── */
 .hero {
   padding: 22px 20px 18px;
   margin-bottom: 14px;
@@ -132,13 +124,11 @@ body {
 .office-pill {
   display: inline-flex; align-items: center; gap: 5px;
   padding: 4px 10px; border-radius: 999px;
-  background: var(--bg); border: 1px solid var(--border-md);
+  background: var(--bg); border: 0.5px solid var(--border-md);
   color: var(--muted); font-size: 10px; font-weight: 600;
   letter-spacing: 0.1em; text-transform: uppercase;
   margin-bottom: 14px;
 }
-
-.office-pill-dot { width: 5px; height: 5px; background: #0f766e; border-radius: 50%; }
 
 .hero-name {
   font-size: 27px; line-height: 1.08;
@@ -207,122 +197,55 @@ body {
 .alert-box.warn { background: var(--amber-bg); color: var(--amber); border: 0.5px solid var(--amber-bd); }
 .alert-box.bad  { background: var(--red-bg);   color: var(--red);   border: 0.5px solid var(--red-bd); }
 
+/* ── Sections ── */
 .section { margin-bottom: 14px; animation: fadeUp 0.4s ease both; }
 
 .section-label {
   font-size: 10px; text-transform: uppercase;
-  letter-spacing: 0.1em; color: var(--muted);
+  letter-spacing: 0.14em; color: var(--soft);
   font-weight: 700; margin: 0 0 9px;
 }
 
-/* ── Compact performance table ── */
-.perf-table-card { overflow: hidden; }
-
-.perf-table-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 11px 15px 10px;
-  border-bottom: 1px solid var(--border);
-}
-
-.perf-table-campaign {
+/* ── Performance ── */
+.perf-type-bar {
+  padding: 10px 15px; background: var(--surface2, #eef2f2);
+  border-bottom: 0.5px solid var(--border-md);
+  border-radius: 12px 12px 0 0;
   display: flex; align-items: center; gap: 7px;
 }
 
-.perf-table-campaign svg { width: 13px; height: 13px; stroke: var(--muted); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.perf-type-bar svg { width: 13px; height: 13px; stroke: #475569; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.perf-type-name { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: #475569; }
 
-.perf-table-name {
-  font-size: 13px; font-weight: 700; color: var(--text);
+.perf-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 15px; border-bottom: 0.5px solid var(--border);
+}
+.perf-row:last-child { border-bottom: none; }
+
+.perf-icon {
+  width: 33px; height: 33px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 
-.perf-table-badge {
-  font-size: 10px; font-weight: 700;
-  padding: 3px 8px; border-radius: 999px;
-  background: var(--blue-bg);
-  color: var(--blue);
-  border: 0.5px solid var(--blue-bd);
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-}
+.perf-icon svg { width: 15px; height: 15px; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.perf-icon.amb { background: var(--amber-bg); } .perf-icon.amb svg { stroke: var(--amber); }
+.perf-icon.grn { background: var(--green-bg); } .perf-icon.grn svg { stroke: var(--green); }
+.perf-icon.red { background: var(--red-bg);   } .perf-icon.red svg { stroke: var(--red); }
 
-/* Column headers */
-.perf-table-cols {
-  display: grid;
-  grid-template-columns: 1fr 52px 64px 64px;
-  padding: 6px 15px;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-}
+.perf-mid { flex: 1; min-width: 0; }
+.perf-name { font-size: 13.5px; font-weight: 600; color: var(--text); line-height: 1.2; }
+.perf-sub  { font-size: 11.5px; color: var(--soft); font-weight: 500; margin-top: 2px; }
+.perf-val  { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: var(--text); }
 
-.perf-table-col-lbl {
-  font-size: 9px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--soft); text-align: right;
-}
-.perf-table-col-lbl:first-child { text-align: left; }
-
-/* Data rows */
-.perf-table-row {
-  display: grid;
-  grid-template-columns: 1fr 52px 64px 64px;
-  padding: 10px 15px;
-  border-bottom: 0.5px solid var(--border);
-  align-items: center;
-}
-.perf-table-row:last-child { border-bottom: none; }
-
-.perf-table-tier {
-  display: flex; align-items: center; gap: 6px;
-}
-
-.perf-table-tier-dot {
-  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-  background: var(--blue);
-}
-
-.perf-table-tier-label {
-  font-size: 13px; font-weight: 600; color: var(--text);
-}
-
-.perf-table-cell {
-  text-align: right;
-  font-size: 15px; font-weight: 600; color: var(--text);
-}
-
-.perf-table-cell.sub  { color: var(--muted); }
-.perf-table-cell.pay  { color: var(--green); }
-.perf-table-cell.can  { color: var(--red); }
-.perf-table-cell.zero { color: var(--soft); font-weight: 500; }
-
-/* Totals footer row */
-.perf-table-totals {
-  display: grid;
-  grid-template-columns: 1fr 52px 64px 64px;
-  padding: 10px 15px;
-  background: #0f1923;
-  border-radius: 0 0 10px 10px;
-}
-
-.perf-table-totals-lbl {
-  font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.45);
-  align-self: center;
-}
-
-.perf-table-totals-val {
-  text-align: right;
-  font-size: 15px; font-weight: 700; color: #fff;
-}
-.perf-table-totals-val.can { color: #F7C1C1; }
-
+/* ── Earnings ── */
 .earn-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .earn-box { padding: 14px 14px 12px; }
 .earn-box.wide { grid-column: span 2; }
 .earn-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--soft); font-weight: 700; margin-bottom: 8px; }
 .earn-value { font-size: 23px; font-weight: 700; letter-spacing: -0.8px; color: var(--text); }
-.earn-value.negative { color: var(--red); }
-.earn-box.deduct { background: var(--red-bg); border-color: var(--red-bd); }
 
+/* ── Summary ── */
 .summary-row {
   display: flex; justify-content: space-between; align-items: center;
   padding: 12px 16px; border-bottom: 0.5px solid var(--border); font-size: 13.5px;
@@ -332,12 +255,13 @@ body {
 .summary-row .val { color: var(--text); font-weight: 600; }
 
 .summary-row.total {
-  background: #0f1923;
-  border-radius: 0 0 10px 10px;
+  background: var(--dark-band);
+  border-radius: 0 0 12px 12px;
 }
 .summary-row.total .lbl { color: rgba(255,255,255,0.55); font-weight: 600; }
 .summary-row.total .val { color: #ffffff; font-size: 16px; font-weight: 700; }
 
+/* ── Action buttons ── */
 .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
 
 .btn {
@@ -351,25 +275,41 @@ body {
 .btn:active { transform: scale(0.97); opacity: 0.85; }
 .btn svg { width: 16px; height: 16px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
-.btn-primary { background: #0f766e; color: #fff; }
+.btn-primary { background: var(--blue); color: #fff; }
 .btn-primary svg { stroke: #fff; }
-.btn-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border-md); }
+.btn-secondary { background: var(--card); color: var(--text); border: 0.5px solid var(--border-md); }
 .btn-secondary svg { stroke: var(--text); }
 .btn.loading { opacity: 0.65; pointer-events: none; }
 
+/* ── Manager view ── */
 .mgr-dark-band {
-  background: #0f1923;
+  background: var(--dark-band);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 12px 12px;
 }
 
-.mgr-stat { padding: 14px 10px; text-align: center; border-right: 0.5px solid rgba(255,255,255,0.08); }
+.mgr-stat {
+  padding: 14px 10px;
+  text-align: center;
+  border-right: 0.5px solid rgba(255,255,255,0.08);
+}
 .mgr-stat:last-child { border-right: none; }
-.mgr-stat-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); font-weight: 700; margin-bottom: 4px; }
-.mgr-stat-val { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.5px; line-height: 1; }
-.mgr-stat-val.danger { color: #F7C1C1; }
 
+.mgr-stat-lbl {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: rgba(255,255,255,0.45);
+  font-weight: 700; margin-bottom: 4px;
+}
+
+.mgr-stat-val {
+  font-size: 22px; font-weight: 700;
+  color: #fff; letter-spacing: -0.5px; line-height: 1;
+}
+
+.mgr-stat-val.danger { color: #fca5a5; }
+
+/* ── Leaderboard ── */
 .search-wrap { position: relative; margin-bottom: 9px; }
 
 .search-icon {
@@ -380,12 +320,12 @@ body {
 
 .search-input {
   width: 100%; padding: 11px 12px 11px 36px;
-  border: 1px solid var(--border-md); border-radius: 12px;
+  border: 0.5px solid var(--border-md); border-radius: 12px;
   font-family: 'Inter', sans-serif; font-size: 13.5px;
   background: var(--card); color: var(--text); outline: none;
   transition: border-color 0.15s ease;
 }
-.search-input:focus { border-color: #0f766e; }
+.search-input:focus { border-color: var(--blue); }
 
 .agent-row {
   display: flex; align-items: center; gap: 11px;
@@ -394,19 +334,19 @@ body {
   transition: background 0.12s ease;
 }
 .agent-row:last-child { border-bottom: none; }
-.agent-row:hover { background: var(--bg); }
+.agent-row:hover { background: #fafbfc; }
 
-.agent-rank { width: 18px; font-size: 12px; font-weight: 700; color: var(--soft); text-align: center; flex-shrink: 0; }
-.agent-rank.gold { color: #BA7517; }
+.agent-rank {
+  width: 18px; font-size: 12px; font-weight: 700;
+  color: var(--soft); text-align: center; flex-shrink: 0;
+}
+.agent-rank.gold { color: #d97706; }
 
 .agent-avatar {
   width: 32px; height: 32px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 11px; font-weight: 700; flex-shrink: 0;
   letter-spacing: 0.02em;
-  border: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  filter: saturate(1.1);
 }
 
 .agent-mid { flex: 1; min-width: 0; }
@@ -414,7 +354,10 @@ body {
 
 .agent-rate-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
 
-.rate-mini-track { width: 64px; height: 3px; background: #f0f3f6; border-radius: 999px; overflow: hidden; flex-shrink: 0; }
+.rate-mini-track {
+  width: 64px; height: 3px; background: var(--border, #dde5e5);
+  border-radius: 999px; overflow: hidden; flex-shrink: 0;
+}
 .rate-mini-fill { height: 100%; border-radius: 999px; }
 
 .agent-sub { font-size: 11px; color: var(--soft); font-weight: 500; }
@@ -423,37 +366,85 @@ body {
 
 .agent-pay { font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; }
 
-.master-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+/* ── Master view ── */
+.master-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
 .master-stat-box { padding: 16px 14px 14px; }
-.master-stat-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--soft); font-weight: 700; margin-bottom: 6px; }
-.master-stat-val { font-size: 26px; font-weight: 700; letter-spacing: -1px; color: var(--text); line-height: 1; }
-.master-stat-sub { font-size: 11px; color: var(--soft); font-weight: 500; margin-top: 4px; }
+
+.master-stat-lbl {
+  font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--soft);
+  font-weight: 700; margin-bottom: 6px;
+}
+
+.master-stat-val {
+  font-size: 26px; font-weight: 700;
+  letter-spacing: -1px; color: var(--text); line-height: 1;
+}
+
+.master-stat-sub {
+  font-size: 11px; color: var(--soft); font-weight: 500; margin-top: 4px;
+}
 
 .office-section { margin-bottom: 20px; }
-.office-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; }
+
+.office-header {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 9px;
+}
+
 .office-header-left { display: flex; align-items: center; gap: 8px; }
+
 .office-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
 .office-title { font-size: 13px; font-weight: 700; color: var(--text); }
+
 .office-meta { font-size: 12px; color: var(--soft); font-weight: 500; }
 
-.office-chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.office-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 9px; border-radius: 999px;
+  font-size: 11px; font-weight: 700;
+}
 .office-chip.good { background: var(--green-bg); color: var(--green); border: 0.5px solid var(--green-bd); }
 .office-chip.warn { background: var(--amber-bg); color: var(--amber); border: 0.5px solid var(--amber-bd); }
 .office-chip.bad  { background: var(--red-bg);   color: var(--red);   border: 0.5px solid var(--red-bd); }
 
-.office-band { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; background: #0f1923; border-radius: 0 0 10px 10px; }
-.office-band-cell { padding: 11px 8px; text-align: center; border-right: 0.5px solid rgba(255,255,255,0.08); }
-.office-band-cell:last-child { border-right: none; }
-.office-band-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); font-weight: 700; margin-bottom: 3px; }
-.office-band-val { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: -0.3px; line-height: 1; }
-.office-band-val.danger { color: #F7C1C1; }
+.office-band {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  background: var(--dark-band); border-radius: 0 0 12px 12px;
+}
 
-.footer { margin-top: 28px; text-align: center; font-size: 11.5px; color: var(--muted); font-weight: 500; }
+.office-band-cell {
+  padding: 11px 8px; text-align: center;
+  border-right: 0.5px solid rgba(255,255,255,0.08);
+}
+.office-band-cell:last-child { border-right: none; }
+
+.office-band-lbl {
+  font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: rgba(255,255,255,0.4);
+  font-weight: 700; margin-bottom: 3px;
+}
+
+.office-band-val {
+  font-size: 17px; font-weight: 700;
+  color: #fff; letter-spacing: -0.3px; line-height: 1;
+}
+.office-band-val.danger { color: #fca5a5; }
+
+/* ── Footer / toast ── */
+.footer { margin-top: 28px; text-align: center; font-size: 11.5px; color: var(--soft); font-weight: 500; }
 
 .toast {
   position: fixed; bottom: 28px; left: 50%;
   transform: translateX(-50%) translateY(12px);
-  background: #0f1923; color: #fff; font-size: 13px; font-weight: 500;
+  background: var(--dark-band); color: #fff; font-size: 13px; font-weight: 500;
   padding: 10px 18px; border-radius: 999px;
   opacity: 0; pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
@@ -461,6 +452,7 @@ body {
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* ── States ── */
 .state-center {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
@@ -470,7 +462,7 @@ body {
 
 .spinner {
   width: 28px; height: 28px;
-  border: 2px solid var(--border-md); border-top-color: #0f766e;
+  border: 2px solid var(--border-md); border-top-color: var(--blue);
   border-radius: 50%; animation: spin 0.75s linear infinite;
 }
 
@@ -486,7 +478,7 @@ body {
   .action-row, .topbar { display: none !important; }
   body { background: #fff !important; padding: 0 !important; }
   .card { box-shadow: none !important; border: 1px solid #ddd !important; }
-  .summary-row.total, .mgr-dark-band, .campaign-group-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .summary-row.total, .mgr-dark-band { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 </style>
 </head>
@@ -504,6 +496,8 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
+// ── Week index — points at a Sheet tab with two columns: Week label | Sheet CSV URL
+// You maintain this one Sheet tab. Add one row per week. Never touch this URL again.
 const INDEX_SHEET_URL = "https://docs.google.com/spreadsheets/d/1ZUG07CKFCDNS_DjnfVXqRnEjhly-94_7pRFRPkKPzMI/gviz/tq?tqx=out:csv&sheet=Week%20Index";
 
 const params      = new URLSearchParams(window.location.search);
@@ -511,22 +505,23 @@ const nameParam   = params.get("name");
 const officeParam = params.get("office");
 const viewParam   = params.get("view");
 
-let weekIndex        = [];
-let activeUrl        = '';
-let activeLabel      = '';
-let activeIndex      = 0;
-let lastGoodIndex    = 0;
-let repWeeksWithData = new Set();
+// ── Week index state
+let weekIndex    = []; // [{label, url}] newest first
+let activeUrl    = '';
+let activeLabel  = '';
 
+// ── Fetch the week index, then kick off the report
 async function init() {
   try {
     const text = await (await fetch(INDEX_SHEET_URL)).text();
     const rows = parseCSV(text);
+    // Expect header row: Week | URL  — skip it
     weekIndex = rows.slice(1)
       .map(r => ({ label: (r[0]||'').trim(), url: (r[2]||'').trim() }))
       .filter(r => r.label && r.url)
-      .reverse();
+      .reverse(); // newest first
   } catch(e) {
+    // If index fetch fails, show an error — no hardcoded fallback
     document.getElementById('app').innerHTML = `<div class="state-center"><span>Could not load week index — check the INDEX_SHEET_URL and that the Week Index tab is shared publicly.</span></div>`;
     return;
   }
@@ -539,27 +534,22 @@ async function init() {
   loadData(activeUrl);
 }
 
+// ── Switch week from the selector
 function switchWeek(idx) {
-  idx = parseInt(idx, 10);
   const entry = weekIndex[idx];
   if (!entry) return;
-  activeIndex = idx;
   activeUrl   = entry.url;
   activeLabel = entry.label;
   loadData(activeUrl);
 }
 
+// ── Build the week selector dropdown (injected into every topbar)
 function weekSelectorHTML() {
   if (weekIndex.length <= 1) return `<span class="week-badge">${activeLabel}</span>`;
-  const isRepView = !viewParam && nameParam;
-  const options = weekIndex.map((w, i) => {
-    const noData = isRepView && repWeeksWithData.size > 0 && !repWeeksWithData.has(i);
-    return `<option value="${i}" ${i === activeIndex ? 'selected' : ''} ${noData ? 'disabled' : ''}>${w.label}${noData ? ' (no data)' : ''}</option>`;
-  }).join('');
-  return `<div class="week-select-wrap">
-    <select class="week-select" onchange="switchWeek(this.value)">${options}</select>
-    <svg viewBox="0 0 14 14" fill="none" style="width:9px;height:9px;flex-shrink:0;pointer-events:none;opacity:0.6"><path d="M2 4.5l5 5 5-5" stroke="#0f766e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </div>`;
+  const options = weekIndex.map((w, i) =>
+    `<option value="${i}" ${i === 0 ? 'selected' : ''}>${w.label}</option>`
+  ).join('');
+  return `<select class="week-select" onchange="switchWeek(this.value)">${options}</select>`;
 }
 
 /* ── CSV ── */
@@ -592,83 +582,13 @@ function initials(name) {
   return name.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
 }
 
-/* ── Campaign detection ──
-   Returns { name, icon, color, isMultiTier }
-   based on the type values in the row.
-──────────────────────────────────────────── */
-function getCampaignConfigs() {
-  const SVG_FLAME = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 0-5 4.5-5 9a5 5 0 0010 0c0-4.5-5-9-5-9z"/><path d="M12 12c0 0-2 1.5-2 3a2 2 0 004 0c0-1.5-2-3-2-3z"/></svg>`;
-  const SVG_HEART = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`;
-  return {
-    wightfibre: {
-      name: 'WightFibre Doors',
-      icon: SVG_WIFI,
-      accentColor: '#0369A1',
-      dotColor: '#0ea5e9',
-      isMultiTier: true,
-      tierSuffix: ' Mbps',
-    },
-    scottishpower: {
-      name: 'Scottish Power',
-      icon: SVG_FLAME,
-      accentColor: '#854F0B',
-      dotColor: '#f59e0b',
-      isMultiTier: false,
-    },
-    youfibre: {
-      name: 'YouFibre',
-      icon: SVG_WIFI,
-      accentColor: '#5b1fd6',
-      dotColor: '#8b5cf6',
-      isMultiTier: false,
-    },
-    charities: {
-      name: 'Charities',
-      icon: SVG_HEART,
-      accentColor: '#A32D2D',
-      dotColor: '#e24b4a',
-      isMultiTier: false,
-    },
-  };
-}
-
-function detectCampaign(r) {
-  const cfg = getCampaignConfigs();
-  const t1 = clean(r['Type 1']).toUpperCase();
-  const t2 = clean(r['Type 2']).toUpperCase();
-  const t3 = clean(r['Type 3']);
-  const t4 = clean(r['Type 4']);
-
-  if ((t3 && t3 !== '0') || (t4 && t4 !== '0') || ['150','300','500','900'].includes(t1)) {
-    return cfg.wightfibre;
-  }
-  if (['PP','DD'].includes(t1) || ['PP','DD'].includes(t2)) {
-    return cfg.scottishpower;
-  }
-  if (['1GB','2GB'].includes(t1) || ['1GB','2GB'].includes(t2)) {
-    return cfg.youfibre;
-  }
-  if (['£10','£12','10','12'].includes(t1) || ['£10','£12','10','12'].includes(t2)) {
-    return cfg.charities;
-  }
-  return {
-    name: clean(r['Type 1']) || 'Campaign',
-    icon: SVG_TAG,
-    accentColor: '#0f766e',
-    dotColor: '#0f766e',
-    isMultiTier: false,
-  };
-}
-
 /* ── Count-up ── */
 function countUp(el, target, prefix, decimals, duration) {
-  const negative = target < 0;
-  const abs = Math.abs(target);
   const start = performance.now();
   function step(now) {
     const p = Math.min((now - start) / duration, 1);
     const e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-    el.textContent = (negative ? '-' : '') + prefix + (e * abs).toLocaleString('en-GB', {
+    el.textContent = prefix + (e * target).toLocaleString('en-GB', {
       minimumFractionDigits: decimals, maximumFractionDigits: decimals
     });
     if (p < 1) requestAnimationFrame(step);
@@ -684,6 +604,7 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2400);
 }
 
+/* ── Share ── */
 function shareReport() {
   const url = window.location.href;
   if (navigator.share) {
@@ -693,6 +614,7 @@ function shareReport() {
   }
 }
 
+/* ── PDF ── */
 function downloadPDF() {
   const btn = document.getElementById('btn-pdf');
   if (btn) { btn.classList.add('loading'); btn.textContent = 'Preparing…'; }
@@ -715,166 +637,92 @@ const SVG_DL     = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 const SVG_SEARCH = `<svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
 const SVG_USERS  = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>`;
 const SVG_CHEVRON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>`;
-const SVG_WIFI   = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>`;
 
-const AVATAR_PALETTE = [
-  { bg: '#a7ffdb', color: '#007a4d' },
-  { bg: '#b3d4ff', color: '#1140cc' },
-  { bg: '#d4b8ff', color: '#5b1fd6' },
-  { bg: '#ffe0a0', color: '#b85c00' },
-  { bg: '#ffb8cc', color: '#c4002e' },
+/* Avatar colour palette — cycles by index */
+const AVATAR_COLORS = [
+  { bg: 'rgba(17,118,110,0.08)', color: '#11766e' },
+  { bg: 'rgba(34,197,94,0.12)', color: '#16a34a' },
+  { bg: 'rgba(245,158,11,0.14)', color: '#d97706' },
+  { bg: 'rgba(239,68,68,0.12)', color: '#dc2626' },
+  { bg: '#F3E8FF', color: '#6D28D9' },
+  { bg: '#E0F2FE', color: '#0369A1' },
 ];
 
-function avatarStyle(nameOrIdx) {
-  let c;
-  if (typeof nameOrIdx === 'string') {
-    let h = 0;
-    for (const ch of nameOrIdx) h = (h * 31 + ch.charCodeAt(0)) & 0xffff;
-    c = AVATAR_PALETTE[h % AVATAR_PALETTE.length];
-  } else {
-    c = AVATAR_PALETTE[nameOrIdx % AVATAR_PALETTE.length];
-  }
-  return `background:${c.bg};color:${c.color};border:none;font-weight:700;`;
+function avatarStyle(idx) {
+  const c = AVATAR_COLORS[idx % AVATAR_COLORS.length];
+  return `background:${c.bg};color:${c.color}`;
 }
 
-/* ── Build compact performance table (works for 1–4 tiers) ── */
-function perfTable(config, tiers, campaignNum) {
-  const totalSub = tiers.reduce((s, t) => s + num(t.sub), 0);
-  const totalPay = tiers.reduce((s, t) => s + num(t.pay), 0);
-  const totalCan = totalSub - totalPay;
-  const multiTier = tiers.length > 1;
-
-  const rows = tiers.map(t => {
-    const s = num(t.sub);
-    const p = num(t.pay);
-    const c = s - p;
-    const fmtCell = (v, cls) => `<div class="perf-table-cell ${cls}${v === 0 ? ' zero' : ''}">${v === 0 ? '—' : v}</div>`;
-    return `
-      <div class="perf-table-row">
-        <div class="perf-table-tier">
-          <div class="perf-table-tier-dot" style="background:${config.dotColor}"></div>
-          <span class="perf-table-tier-label">${t.label}</span>
-        </div>
-        ${fmtCell(s, 'sub')}
-        ${fmtCell(c, 'can')}
-        ${fmtCell(p, 'pay')}
-      </div>`;
-  }).join('');
-
-  const badgePayable = Math.max(0, totalPay);
-  const badgeNeutral = totalPay <= 0;
-  const badgeText = multiTier
-    ? `${tiers.length} types · ${badgePayable} payable`
-    : `${badgePayable} payable`;
-  const badgeStyle = badgeNeutral
-    ? `background:var(--bg);color:var(--muted);border-color:var(--border-md)`
-    : `background:${config.accentColor}1a;color:${config.accentColor};border-color:${config.accentColor}33`;
-
-  const iconStyled = config.icon.replace('stroke="currentColor"', `stroke="${config.accentColor}"`);
-  const campaignChip = campaignNum != null
-    ? `<span style="font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--bg);color:var(--soft);border:1px solid var(--border-md);letter-spacing:0.06em;margin-left:6px">C${campaignNum}</span>`
-    : '';
-
-  return `
-    <div class="card perf-table-card">
-      <div class="perf-table-header">
-        <div class="perf-table-campaign">
-          ${iconStyled}
-          <span class="perf-table-name">${config.name}</span>
-          ${campaignChip}
-        </div>
-        <span class="perf-table-badge" style="${badgeStyle}">${badgeText}</span>
-      </div>
-      <div class="perf-table-cols">
-        <div class="perf-table-col-lbl">Type</div>
-        <div class="perf-table-col-lbl">Sub</div>
-        <div class="perf-table-col-lbl">Can</div>
-        <div class="perf-table-col-lbl">Payable</div>
-      </div>
-      ${rows}
-      ${multiTier ? `
-      <div class="perf-table-totals">
-        <div class="perf-table-totals-lbl">Total</div>
-        <div class="perf-table-totals-val">${totalSub || '—'}</div>
-        <div class="perf-table-totals-val can">${totalCan > 0 ? totalCan : '—'}</div>
-        <div class="perf-table-totals-val">${totalPay || '—'}</div>
-      </div>` : ''}
-    </div>`;
-}
-
-/* ── Build performance section for a rep row ── */
-function perfSection(r, multiCampaign, idx) {
-  const config = detectCampaign(r);
-  const campaignNum = multiCampaign ? (idx + 1) : null;
-
-  if (config.isMultiTier) {
-    const suffix = config.tierSuffix || '';
-    const tiers = [
-      { label: clean(r['Type 1']) + suffix, sub: r['Submitted 1'], pay: r['Payable 1'] },
-      { label: clean(r['Type 2']) + suffix, sub: r['Submitted 2'], pay: r['Payable 2'] },
-      { label: clean(r['Type 3']) + suffix, sub: r['Submitted 3'], pay: r['Payable 3'] },
-      { label: clean(r['Type 4']) + suffix, sub: r['Submitted 4'], pay: r['Payable 4'] },
-    ].filter(t => !t.label.startsWith('0') && clean(t.label) !== suffix.trim());
-
-    return `<section class="section">${perfTable(config, tiers, campaignNum)}</section>`;
-  }
-
-  const types = [
-    { label: clean(r['Type 1']), sub: r['Submitted 1'], pay: r['Payable 1'] },
-    { label: clean(r['Type 2']), sub: r['Submitted 2'], pay: r['Payable 2'] },
-  ].filter(t => t.label && t.label !== '0');
-
-  if (!types.length) return '';
-
-  return `<section class="section">${perfTable(config, types, campaignNum)}</section>`;
-}
-
-/* ── Rep render ── */
+/* ── Rep render — accepts array of rows (one per campaign) ── */
 function render(rows) {
-  const d = rows[0];
+  const d = rows[0]; /* primary row for name/office/week */
   const nameVal   = clean(d['Name']);
   const officeVal = clean(d['Office']);
-  const payWeekRaw = clean(d['Date'] || d['Pay Week'] || '');
-  // Format date nicely: try to parse DD/MM/YYYY → "25 May 2026", fallback to raw
-  function fmtPayWeek(raw) {
-    const m = raw.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
-    if (!m) return raw.replace(/^pay week[:\s]*/i, '').trim();
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    return `${parseInt(m[1])} ${months[parseInt(m[2])-1]} ${m[3]}`;
-  }
-  const payWeek = fmtPayWeek(payWeekRaw);
+  const payWeek   = clean(d['Date'] || d['Pay Week'] || '');
   const multiCampaign = rows.length > 1;
 
-  const totalPay    = rows.reduce((s, r) => s + num(r['Total Pay']), 0);
-  const topUps      = rows.reduce((s, r) => s + num(r['Top Ups']), 0);
-  const tablet      = rows.reduce((s, r) => s + num(r['Tablet']), 0);
-  const dwm         = rows.reduce((s, r) => s + num(r['DWM Incentive']), 0);
-  const adj         = rows.reduce((s, r) => s + num(r['Adjustment']), 0);
-  const override    = rows.reduce((s, r) => s + num(r['Override']), 0);
-  const hasOverride = override !== 0;
+  /* Aggregate totals across all rows */
+  const totalPay      = rows.reduce((s, r) => s + num(r['Total Pay']), 0);
+  const topUps        = rows.reduce((s, r) => s + num(r['Top Ups']), 0);
+  const tablet        = rows.reduce((s, r) => s + num(r['Tablet']), 0);
+  const dwm           = rows.reduce((s, r) => s + num(r['DWM Incentive']), 0);
+  const adj           = rows.reduce((s, r) => s + num(r['Adjustment']), 0);
+  const override      = rows.reduce((s, r) => s + num(r['Override']), 0);
+  const hasOverride   = override !== 0;
 
-  /* Aggregate submitted/payable across all types (1–4) for all rows */
-  const submittedTotal = rows.reduce((s, r) => {
-    return s + num(r['Submitted 1']) + num(r['Submitted 2']) + num(r['Submitted 3']) + num(r['Submitted 4']);
-  }, 0);
-  const payableTotal = rows.reduce((s, r) => {
-    return s + num(r['Payable 1']) + num(r['Payable 2']) + num(r['Payable 3']) + num(r['Payable 4']);
-  }, 0);
+  /* Combined submitted/payable/cancelled across all campaigns */
+  const submittedTotal = rows.reduce((s, r) => s + num(r['Submitted 1']) + num(r['Submitted 2']), 0);
+  const payableTotal   = rows.reduce((s, r) => s + num(r['Payable 1'])   + num(r['Payable 2']), 0);
   const cancelledTotal = submittedTotal - payableTotal;
   const pct = submittedTotal > 0 ? Math.round((payableTotal / submittedTotal) * 100) : 0;
 
   const state    = pct >= 80 ? 'good' : pct >= 60 ? 'warn' : 'bad';
   const rateIcon = state === 'good' ? SVG_THUMBS : SVG_ALERT;
   const alertMsg = state === 'good'
-    ? 'Strong week — payable rate is above target. Keep it up.'
+    ? 'Strong week — payable rate is performing above target.'
     : state === 'warn'
-    ? 'Getting there, but room to improve. Focus on lead quality this week.'
-    : 'Below target. Review your cancelled leads with your manager this week.';
+    ? "Tracking steadily, but there's room to push higher. Focus on quality leads this week."
+    : 'Conversion is below the 80% target. Some work needs to be done — review cancelled leads with your manager this week.';
 
-  const allPerfSections = rows.map((r, i) => perfSection(r, multiCampaign, i)).join('');
+  /* Build a performance section per campaign row */
+  function perfSection(r, idx) {
+    const label = multiCampaign ? `Campaign ${idx + 1}` : '';
+    const sections = [];
 
+    const types = [
+      { key: '1', type: clean(r['Type 1']), sub: clean(r['Submitted 1']), pay: clean(r['Payable 1']), can: clean(r['Cancelled 1']) },
+      { key: '2', type: clean(r['Type 2']), sub: clean(r['Submitted 2']), pay: clean(r['Payable 2']), can: clean(r['Cancelled 2']) },
+    ].filter(t => t.type && t.type !== '0');
+
+    return types.map((t, ti) => `
+      <section class="section">
+        <p class="section-label">${t.type} performance${multiCampaign && ti === 0 ? ` <span style="opacity:0.6;font-weight:500">· ${label}</span>` : ''}</p>
+        <div class="perf-card card">
+          <div class="perf-type-bar">${SVG_TAG}<span class="perf-type-name">${t.type}</span></div>
+          <div class="perf-row">
+            <div class="perf-icon amb">${SVG_SEND}</div>
+            <div class="perf-mid"><div class="perf-name">Submitted</div><div class="perf-sub">Total ${t.type} leads</div></div>
+            <div class="perf-val">${t.sub}</div>
+          </div>
+          <div class="perf-row">
+            <div class="perf-icon grn">${SVG_CHECK}</div>
+            <div class="perf-mid"><div class="perf-name">Payable</div><div class="perf-sub">Approved for pay</div></div>
+            <div class="perf-val">${t.pay}</div>
+          </div>
+          <div class="perf-row">
+            <div class="perf-icon red">${SVG_X}</div>
+            <div class="perf-mid"><div class="perf-name">Cancelled</div><div class="perf-sub">Not payable this week</div></div>
+            <div class="perf-val">${t.can}</div>
+          </div>
+        </div>
+      </section>`).join('');
+  }
+
+  const allPerfSections = rows.map((r, i) => perfSection(r, i)).join('');
+
+  /* Campaign badge shown in hero if multi */
   const campaignBadge = multiCampaign
-    ? `<div style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:rgba(15,118,110,0.08);border:1px solid rgba(15,118,110,0.18);color:#0f766e;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-left:8px">${rows.length} campaigns</div>`
+    ? `<div style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;background:rgba(17,118,110,0.08);border:0.5px solid rgba(17,118,110,0.25);color:#11766e;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-left:8px">${rows.length} campaigns</div>`
     : '';
 
   document.getElementById('app').innerHTML = `
@@ -891,7 +739,6 @@ function render(rows) {
     <section class="hero card">
       <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:14px">
         <div class="office-pill" style="margin-bottom:0">
-          <span class="office-pill-dot"></span>
           ${officeVal} Office
         </div>
         ${campaignBadge}
@@ -922,11 +769,11 @@ function render(rows) {
     <section class="section">
       <p class="section-label">Earnings breakdown</p>
       <div class="earn-grid">
-        <div class="earn-box card${topUps < 0 ? ' deduct' : ''}"><div class="earn-label">Top Ups</div><div class="earn-value${topUps < 0 ? ' negative' : ''}" id="earn-topups">£0.00</div></div>
-        <div class="earn-box card${tablet < 0 ? ' deduct' : ''}"><div class="earn-label">Tablet</div><div class="earn-value${tablet < 0 ? ' negative' : ''}" id="earn-tablet">£0.00</div></div>
-        <div class="earn-box card${dwm < 0 ? ' deduct' : ''}"><div class="earn-label">DWM Incentive</div><div class="earn-value${dwm < 0 ? ' negative' : ''}" id="earn-dwm">£0.00</div></div>
-        <div class="earn-box card${adj < 0 ? ' deduct' : ''}"><div class="earn-label">Adjustment</div><div class="earn-value${adj < 0 ? ' negative' : ''}" id="earn-adj">£0.00</div></div>
-        ${hasOverride ? `<div class="earn-box card wide${override < 0 ? ' deduct' : ''}"><div class="earn-label">Override</div><div class="earn-value${override < 0 ? ' negative' : ''}" id="earn-override">£0.00</div></div>` : ''}
+        <div class="earn-box card"><div class="earn-label">Top Ups</div><div class="earn-value" id="earn-topups">£0.00</div></div>
+        <div class="earn-box card"><div class="earn-label">Tablet</div><div class="earn-value" id="earn-tablet">£0.00</div></div>
+        <div class="earn-box card"><div class="earn-label">DWM Incentive</div><div class="earn-value" id="earn-dwm">£0.00</div></div>
+        <div class="earn-box card"><div class="earn-label">Adjustment</div><div class="earn-value" id="earn-adj">£0.00</div></div>
+        ${hasOverride ? `<div class="earn-box card wide"><div class="earn-label">Override</div><div class="earn-value" id="earn-override">£0.00</div></div>` : ''}
       </div>
     </section>
 
@@ -934,8 +781,8 @@ function render(rows) {
       <p class="section-label">Pay summary</p>
       <div class="summary-card card">
         <div class="summary-row"><span class="lbl">Submitted total</span><span class="val">${submittedTotal}</span></div>
-        <div class="summary-row"><span class="lbl">Cancelled total</span><span class="val">${cancelledTotal}</span></div>
         <div class="summary-row"><span class="lbl">Payable total</span><span class="val">${payableTotal}</span></div>
+        <div class="summary-row"><span class="lbl">Cancelled total</span><span class="val">${cancelledTotal}</span></div>
         <div class="summary-row total"><span class="lbl">Final pay</span><span class="val" id="earn-final">£0.00</span></div>
       </div>
     </section>
@@ -979,18 +826,20 @@ function renderMaster(rows, headers) {
   }).filter(d => clean(d['Name']) !== '0' && clean(d['Name']) !== '');
 
   if (!allData.length) {
-    document.getElementById('app').innerHTML = `<div class="state-center"><span>No data found.</span></div>`;
+    document.getElementById('app').innerHTML =
+      `<div class="state-center"><span>No data found.</span></div>`;
     return;
   }
 
   const payWeek       = clean(allData[0]['Date'] || allData[0]['Pay Week'] || '');
   const grandPay      = allData.reduce((s, d) => s + num(d['Total Pay']), 0);
-  const grandSub      = allData.reduce((s, d) => s + num(d['Submitted 1']) + num(d['Submitted 2']) + num(d['Submitted 3']) + num(d['Submitted 4']), 0);
-  const grandPayable  = allData.reduce((s, d) => s + num(d['Payable 1'])   + num(d['Payable 2'])   + num(d['Payable 3']) + num(d['Payable 4']), 0);
+  const grandSub      = allData.reduce((s, d) => s + num(d['Submitted 1']) + num(d['Submitted 2']), 0);
+  const grandPayable  = allData.reduce((s, d) => s + num(d['Payable 1'])   + num(d['Payable 2']), 0);
   const grandCancelled = grandSub - grandPayable;
   const grandRate     = grandSub > 0 ? Math.round((grandPayable / grandSub) * 100) : 0;
   const grandState    = grandRate >= 80 ? 'good' : grandRate >= 60 ? 'warn' : 'bad';
 
+  /* Group by office */
   const officeMap = {};
   allData.forEach(d => {
     const key = clean(d['Office']) || 'Unknown';
@@ -998,11 +847,12 @@ function renderMaster(rows, headers) {
     officeMap[key].push(d);
   });
 
-  const DOT_COLORS = ['#0f766e','#639922','#BA7517','#A32D2D','#6D28D9','#0369A1','#B45309'];
+  /* Deterministic office dot colours */
+  const DOT_COLORS = ['#11766e','#22c55e','#f59e0b','#ef4444','#6D28D9','#0369A1','#B45309'];
 
   const officeSections = Object.entries(officeMap).map(([office, agents], oi) => {
-    const oSub      = agents.reduce((s, d) => s + num(d['Submitted 1']) + num(d['Submitted 2']) + num(d['Submitted 3']) + num(d['Submitted 4']), 0);
-    const oPayable  = agents.reduce((s, d) => s + num(d['Payable 1'])   + num(d['Payable 2'])   + num(d['Payable 3']) + num(d['Payable 4']), 0);
+    const oSub      = agents.reduce((s, d) => s + num(d['Submitted 1']) + num(d['Submitted 2']), 0);
+    const oPayable  = agents.reduce((s, d) => s + num(d['Payable 1'])   + num(d['Payable 2']), 0);
     const oCancelled = oSub - oPayable;
     const oPay      = agents.reduce((s, d) => s + num(d['Total Pay']), 0);
     const oRate     = oSub > 0 ? Math.round((oPayable / oSub) * 100) : 0;
@@ -1014,11 +864,11 @@ function renderMaster(rows, headers) {
     const agentRows = sorted.map((d, i) => {
       const name    = clean(d['Name']);
       const pay     = num(d['Total Pay']);
-      const sub     = num(d['Submitted 1']) + num(d['Submitted 2']) + num(d['Submitted 3']) + num(d['Submitted 4']);
-      const payable = num(d['Payable 1'])   + num(d['Payable 2'])   + num(d['Payable 3']) + num(d['Payable 4']);
+      const sub     = num(d['Submitted 1']) + num(d['Submitted 2']);
+      const payable = num(d['Payable 1'])   + num(d['Payable 2']);
       const rate    = sub > 0 ? Math.round((payable / sub) * 100) : 0;
       const rateState = rate >= 80 ? 'good' : rate >= 60 ? 'warn' : 'bad';
-      const barColor  = rateState === 'good' ? '#639922' : rateState === 'warn' ? '#BA7517' : '#E24B4A';
+      const barColor  = rateState === 'good' ? '#22c55e' : rateState === 'warn' ? '#f59e0b' : '#ef4444';
       const subClass  = rateState === 'warn' ? 'agent-sub warn-text' : rateState === 'bad' ? 'agent-sub bad-text' : 'agent-sub';
       const rankClass = i === 0 ? 'agent-rank gold' : 'agent-rank';
 
@@ -1026,7 +876,7 @@ function renderMaster(rows, headers) {
         <a class="agent-row agent-item" data-name="${name.toLowerCase()}" data-office="${office.toLowerCase()}"
            href="?name=${encodeURIComponent(name)}" style="display:flex">
           <div class="${rankClass}">${i + 1}</div>
-          <div class="agent-avatar" style="${avatarStyle(name)}">${initials(name)}</div>
+          <div class="agent-avatar" style="${avatarStyle(i)}">${initials(name)}</div>
           <div class="agent-mid">
             <div class="agent-name">${name}</div>
             <div class="agent-rate-row">
@@ -1058,10 +908,22 @@ function renderMaster(rows, headers) {
         <div class="card" style="overflow:hidden">
           ${agentRows}
           <div class="office-band">
-            <div class="office-band-cell"><div class="office-band-lbl">Submitted</div><div class="office-band-val">${oSub}</div></div>
-            <div class="office-band-cell"><div class="office-band-lbl">Payable</div><div class="office-band-val">${oPayable}</div></div>
-            <div class="office-band-cell"><div class="office-band-lbl">Cancelled</div><div class="office-band-val${oCancelled > 0 ? ' danger' : ''}">${oCancelled}</div></div>
-            <div class="office-band-cell"><div class="office-band-lbl">Total pay</div><div class="office-band-val">${formatMoney(oPay)}</div></div>
+            <div class="office-band-cell">
+              <div class="office-band-lbl">Submitted</div>
+              <div class="office-band-val">${oSub}</div>
+            </div>
+            <div class="office-band-cell">
+              <div class="office-band-lbl">Payable</div>
+              <div class="office-band-val">${oPayable}</div>
+            </div>
+            <div class="office-band-cell">
+              <div class="office-band-lbl">Cancelled</div>
+              <div class="office-band-val${oCancelled > 0 ? ' danger' : ''}">${oCancelled}</div>
+            </div>
+            <div class="office-band-cell">
+              <div class="office-band-lbl">Total pay</div>
+              <div class="office-band-val">${formatMoney(oPay)}</div>
+            </div>
           </div>
         </div>
       </div>`;
@@ -1079,7 +941,6 @@ function renderMaster(rows, headers) {
     <section class="hero card" style="padding:0;margin-bottom:14px">
       <div style="padding:22px 20px 18px">
         <div class="office-pill">
-          <span class="office-pill-dot"></span>
           All Offices
         </div>
         <div class="hero-name">${allData.length} Agents &middot; ${Object.keys(officeMap).length} Offices</div>
@@ -1095,9 +956,18 @@ function renderMaster(rows, headers) {
         </div>
       </div>
       <div class="mgr-dark-band">
-        <div class="mgr-stat"><div class="mgr-stat-lbl">Submitted</div><div class="mgr-stat-val">${grandSub}</div></div>
-        <div class="mgr-stat"><div class="mgr-stat-lbl">Payable</div><div class="mgr-stat-val">${grandPayable}</div></div>
-        <div class="mgr-stat"><div class="mgr-stat-lbl">Cancelled</div><div class="mgr-stat-val${grandCancelled > 0 ? ' danger' : ''}">${grandCancelled}</div></div>
+        <div class="mgr-stat">
+          <div class="mgr-stat-lbl">Submitted</div>
+          <div class="mgr-stat-val">${grandSub}</div>
+        </div>
+        <div class="mgr-stat">
+          <div class="mgr-stat-lbl">Payable</div>
+          <div class="mgr-stat-val">${grandPayable}</div>
+        </div>
+        <div class="mgr-stat">
+          <div class="mgr-stat-lbl">Cancelled</div>
+          <div class="mgr-stat-val${grandCancelled > 0 ? ' danger' : ''}">${grandCancelled}</div>
+        </div>
       </div>
     </section>
 
@@ -1150,6 +1020,7 @@ function renderMaster(rows, headers) {
   }, 80);
 }
 
+/* ── Filter master view ── */
 function filterMaster() {
   const q = (document.getElementById('agent-search')?.value || '').toLowerCase();
   document.querySelectorAll('.agent-item').forEach(el => {
@@ -1178,24 +1049,25 @@ function renderManager(rows, headers) {
   }
 
   const totalPay       = data.reduce((s, d) => s + num(d['Total Pay']), 0);
-  const totalSubmitted = data.reduce((s, d) => s + num(d['Submitted 1']) + num(d['Submitted 2']) + num(d['Submitted 3']) + num(d['Submitted 4']), 0);
-  const totalPayable   = data.reduce((s, d) => s + num(d['Payable 1'])   + num(d['Payable 2'])   + num(d['Payable 3']) + num(d['Payable 4']), 0);
+  const totalSubmitted = data.reduce((s, d) => s + num(d['Submitted 1']) + num(d['Submitted 2']), 0);
+  const totalPayable   = data.reduce((s, d) => s + num(d['Payable 1'])   + num(d['Payable 2']), 0);
   const totalCancelled = totalSubmitted - totalPayable;
   const avgRate = totalSubmitted > 0 ? Math.round((totalPayable / totalSubmitted) * 100) : 0;
   const payWeek = clean(data[0]['Date'] || data[0]['Pay Week'] || '');
   const officeLabel = officeParam ? `${officeParam.charAt(0).toUpperCase() + officeParam.slice(1)}` : 'All Offices';
   const stateAvg = avgRate >= 80 ? 'good' : avgRate >= 60 ? 'warn' : 'bad';
 
+  /* Sort agents by total pay descending */
   const sorted = [...data].sort((a, b) => num(b['Total Pay']) - num(a['Total Pay']));
 
   const agentRows = sorted.map((d, i) => {
     const name    = clean(d['Name']);
     const pay     = num(d['Total Pay']);
-    const sub     = num(d['Submitted 1']) + num(d['Submitted 2']) + num(d['Submitted 3']) + num(d['Submitted 4']);
-    const payable = num(d['Payable 1'])   + num(d['Payable 2'])   + num(d['Payable 3']) + num(d['Payable 4']);
+    const sub     = num(d['Submitted 1']) + num(d['Submitted 2']);
+    const payable = num(d['Payable 1'])   + num(d['Payable 2']);
     const rate    = sub > 0 ? Math.round((payable / sub) * 100) : 0;
     const rateState = rate >= 80 ? 'good' : rate >= 60 ? 'warn' : 'bad';
-    const barColor  = rateState === 'good' ? '#639922' : rateState === 'warn' ? '#BA7517' : '#E24B4A';
+    const barColor  = rateState === 'good' ? '#22c55e' : rateState === 'warn' ? '#f59e0b' : '#ef4444';
     const subClass  = rateState === 'warn' ? 'agent-sub warn-text' : rateState === 'bad' ? 'agent-sub bad-text' : 'agent-sub';
     const rankClass = i === 0 ? 'agent-rank gold' : 'agent-rank';
 
@@ -1203,7 +1075,7 @@ function renderManager(rows, headers) {
       <a class="agent-row agent-item" data-name="${name.toLowerCase()}"
          href="?name=${encodeURIComponent(name)}" style="display:flex">
         <div class="${rankClass}">${i + 1}</div>
-        <div class="agent-avatar" style="${avatarStyle(name)}">${initials(name)}</div>
+        <div class="agent-avatar" style="${avatarStyle(i)}">${initials(name)}</div>
         <div class="agent-mid">
           <div class="agent-name">${name}</div>
           <div class="agent-rate-row">
@@ -1232,7 +1104,6 @@ function renderManager(rows, headers) {
     <section class="hero card" style="padding:0;margin-bottom:14px">
       <div style="padding:22px 20px 18px">
         <div class="office-pill">
-          <span class="office-pill-dot"></span>
           ${officeLabel} Office
         </div>
         <div class="hero-name">${data.length} Agent${data.length !== 1 ? 's' : ''}</div>
@@ -1248,9 +1119,18 @@ function renderManager(rows, headers) {
         </div>
       </div>
       <div class="mgr-dark-band">
-        <div class="mgr-stat"><div class="mgr-stat-lbl">Submitted</div><div class="mgr-stat-val">${totalSubmitted}</div></div>
-        <div class="mgr-stat"><div class="mgr-stat-lbl">Payable</div><div class="mgr-stat-val">${totalPayable}</div></div>
-        <div class="mgr-stat"><div class="mgr-stat-lbl">Cancelled</div><div class="mgr-stat-val${totalCancelled > 0 ? ' danger' : ''}">${totalCancelled}</div></div>
+        <div class="mgr-stat">
+          <div class="mgr-stat-lbl">Submitted</div>
+          <div class="mgr-stat-val">${totalSubmitted}</div>
+        </div>
+        <div class="mgr-stat">
+          <div class="mgr-stat-lbl">Payable</div>
+          <div class="mgr-stat-val">${totalPayable}</div>
+        </div>
+        <div class="mgr-stat">
+          <div class="mgr-stat-lbl">Cancelled</div>
+          <div class="mgr-stat-val${totalCancelled > 0 ? ' danger' : ''}">${totalCancelled}</div>
+        </div>
       </div>
     </section>
 
@@ -1273,6 +1153,7 @@ function renderManager(rows, headers) {
   if (payEl) countUp(payEl, totalPay, '£', 2, 800);
 }
 
+/* ── Filter agents ── */
 function filterAgents() {
   const q = (document.getElementById('agent-search')?.value || '').toLowerCase();
   document.querySelectorAll('.agent-item').forEach(el => {
@@ -1280,89 +1161,72 @@ function filterAgents() {
   });
 }
 
-/* ── Earnings history ── */
-async function loadRepHistory() {
+/* ── Earnings history sparkline — fetches all weeks for this rep ── */
+async function loadRepHistory(currentPay) {
   if (!nameParam || weekIndex.length < 2) return;
   const el = document.getElementById('history-chart');
   if (!el) return;
 
-  el.innerHTML = `<div style="display:flex;align-items:center;gap:8px;color:var(--soft);font-size:12px;"><div class="spinner" style="width:16px;height:16px;border-width:2px;"></div> Loading history…</div>`;
-  el.style.display = 'block';
-
+  // Fetch all weeks in parallel (skip the first — already loaded)
   const results = await Promise.allSettled(
-    weekIndex.map(async (w, i) => {
+    weekIndex.map(async (w) => {
       try {
         const text = await (await fetch(w.url)).text();
         const rows = parseCSV(text);
         const headers = rows[0].map(h => h.trim());
-        // sum ALL rows matching this rep name (covers multi-campaign reps)
-        const matches = rows.slice(1).filter(r => r[0]?.trim().toLowerCase() === nameParam.trim().toLowerCase());
-        if (!matches.length) return { label: w.label, pay: 0, found: false, idx: i };
-        const totalPay = matches.reduce((s, r) => {
-          const d = {};
-          headers.forEach((h, j) => d[h] = r[j]);
-          return s + num(d['Total Pay']);
-        }, 0);
-        repWeeksWithData.add(i);
-        return { label: w.label, pay: totalPay, found: true, idx: i };
-      } catch { return { label: w.label, pay: 0, found: false, idx: i }; }
+        const match = rows.slice(1).find(r => r[0]?.trim().toLowerCase() === nameParam.trim().toLowerCase());
+        if (!match) return { label: w.label, pay: 0, found: false };
+        const d = {};
+        headers.forEach((h, i) => d[h] = match[i]);
+        return { label: w.label, pay: num(d['Total Pay']), found: true };
+      } catch { return { label: w.label, pay: 0, found: false }; }
     })
   );
 
-  document.querySelectorAll('.week-select-wrap').forEach(wrap => {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = weekSelectorHTML();
-    wrap.replaceWith(tmp.firstElementChild || tmp);
-  });
-
   const points = results
-    .map((r, i) => r.status === 'fulfilled'
-      ? { ...r.value, weekIdx: i }
-      : { pay: 0, found: false, weekIdx: i, label: weekIndex[i]?.label || '' })
-    .reverse();
+    .map(r => r.status === 'fulfilled' ? r.value : { pay: 0, found: false })
+    .reverse(); // oldest first for chart
 
   const found = points.filter(p => p.found);
   if (found.length < 2) { el.style.display = 'none'; return; }
 
-  const n      = points.length;
-  const PAD_L  = 6, PAD_R = 6, PAD_T = 26, PAD_B = 20, BAR_H = 56;
-  const VW     = 320;
-  const VH     = PAD_T + BAR_H + PAD_B;
-  const slotW  = (VW - PAD_L - PAD_R) / n;
-  const barW   = Math.min(28, Math.max(10, slotW * 0.62));
-  const maxPay = Math.max(...found.map(p => p.pay), 1);
+  const maxPay = Math.max(...points.map(p => p.pay), 1);
+  const W = 100 / points.length;
+  const barH = 36;
 
   const bars = points.map((p, i) => {
-    const cx      = PAD_L + slotW * i + slotW / 2;
-    const bh      = p.found ? Math.max(5, (p.pay / maxPay) * BAR_H) : 5;
-    const by      = PAD_T + (BAR_H - bh);
-    const isActive = p.weekIdx === activeIndex;
-    const fill    = !p.found ? '#e2e8f0' : isActive ? '#0f766e' : 'rgba(15,118,110,0.2)';
-    const valTxt  = p.found ? (p.pay >= 1000 ? '\xa3' + (p.pay/1000).toFixed(1) + 'k' : '\xa3' + Math.round(p.pay)) : '';
-    const shortLbl = p.label.replace(/w\/c\s*/i,'').replace(/\s*\d{4}$/,'').trim();
+    const h = p.found ? Math.max(3, Math.round((p.pay / maxPay) * barH)) : 3;
+    const y = barH - h;
+    const isCurrent = i === points.length - 1;
+    const fill = !p.found ? '#e2e8f0' : isCurrent ? '#11766e' : 'rgba(17,118,110,0.35)';
     return `<g>
-      <rect x="${cx - barW/2}" y="${by}" width="${barW}" height="${bh}" rx="3.5" fill="${fill}"/>
-      ${p.found ? `<text x="${cx}" y="${PAD_T - 5}" text-anchor="middle" font-size="8" font-weight="${isActive?'700':'500'}" fill="${isActive?'#0f766e':'#94a3b8'}" font-family="Inter,sans-serif">${valTxt}</text>` : ''}
-      <text x="${cx}" y="${VH - 3}" text-anchor="middle" font-size="7.5" font-weight="${isActive?'700':'400'}" fill="${isActive?'#0f766e':'#94a3b8'}" font-family="Inter,sans-serif">${shortLbl}</text>
+      <rect x="${i * W + 0.5}%" y="${y}" width="${W - 1}%" height="${h}" rx="2" fill="${fill}">
+        <title>${p.label}: ${p.found ? formatMoney(p.pay) : 'No data'}</title>
+      </rect>
+      ${isCurrent ? `<rect x="${i * W + 0.5}%" y="${y}" width="${W - 1}%" height="${h}" rx="2" fill="#11766e" opacity="1"/>` : ''}
     </g>`;
   }).join('');
 
   const total = found.reduce((s, p) => s + p.pay, 0);
   const avg   = total / found.length;
-  const last  = found[found.length - 1].pay;
-  const prev  = found.length >= 2 ? found[found.length - 2].pay : null;
-  const diff  = prev !== null ? last - prev : 0;
-  const trendUp = diff >= 0;
+  const trend = found.length >= 2
+    ? (found[found.length - 1].pay >= found[found.length - 2].pay ? '↑' : '↓')
+    : '';
+  const trendColor = trend === '↑' ? 'var(--green)' : 'var(--red)';
 
   el.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
       <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.13em;color:var(--soft);">Earnings history</span>
-      <div style="display:flex;align-items:center;gap:8px;">
+      <div style="display:flex;align-items:center;gap:10px;">
         <span style="font-size:11px;font-weight:600;color:var(--muted);">Avg ${formatMoney(avg)}</span>
-        ${prev !== null ? `<span style="font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:${trendUp?'var(--green-bg)':'var(--red-bg)'};color:${trendUp?'var(--green)':'var(--red)'};border:0.5px solid ${trendUp?'var(--green-bd)':'var(--red-bd)'};">${trendUp?'\u25b2':'\u25bc'} ${formatMoney(Math.abs(diff))}</span>` : ''}
+        ${trend ? `<span style="font-size:13px;font-weight:700;color:${trendColor}">${trend} vs last week</span>` : ''}
       </div>
     </div>
-    <svg width="100%" viewBox="0 0 ${VW} ${VH}" preserveAspectRatio="xMidYMid meet" style="overflow:visible;display:block;">${bars}</svg>`;
+    <svg width="100%" height="${barH}" viewBox="0 0 100 ${barH}" preserveAspectRatio="none" style="overflow:visible;">${bars}</svg>
+    <div style="display:flex;justify-content:space-between;margin-top:5px;">
+      <span style="font-size:10px;color:var(--soft);">${points[0].label}</span>
+      <span style="font-size:10px;color:var(--soft);">${points[points.length-1].label}</span>
+    </div>`;
   el.style.display = 'block';
 }
 
@@ -1374,26 +1238,26 @@ async function loadData(sheetUrl) {
     const rows    = parseCSV(text);
     const headers = rows[0].map(h => h.trim());
 
-    if (viewParam === 'roel') { renderMaster(rows, headers); return; }
-    if (viewParam === 'manager') { renderManager(rows, headers); return; }
+    if (viewParam === 'roel') {
+      renderMaster(rows, headers);
+      return;
+    }
 
+    if (viewParam === 'manager') {
+      renderManager(rows, headers);
+      return;
+    }
+
+    /* Collect ALL rows for this name (multiple campaigns) */
     const matchingRows = rows.slice(1).filter(r =>
       r[0]?.trim().toLowerCase() === nameParam?.trim().toLowerCase()
     );
 
     if (!matchingRows.length) {
-      document.getElementById('app').innerHTML = `
-        <div class="state-center">
-          <div style="font-size:32px;margin-bottom:4px;">📭</div>
-          <strong style="font-size:15px;color:var(--text);">No data this week</strong>
-          <span style="font-size:13px;color:var(--muted);margin-top:4px;">${activeLabel}</span>
-          <button onclick="switchWeek(${lastGoodIndex})" style="margin-top:18px;background:var(--blue);color:#fff;border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;padding:11px 22px;border-radius:12px;cursor:pointer;">← Back to ${weekIndex[lastGoodIndex]?.label || 'latest week'}</button>
-        </div>`;
+      document.getElementById('app').innerHTML =
+        `<div class="state-center"><span>No report found for <strong>${nameParam || '(no name)'}</strong> in <strong>${activeLabel}</strong>.</span></div>`;
       return;
     }
-
-    repWeeksWithData.add(activeIndex);
-    lastGoodIndex = activeIndex;
 
     const repRows = matchingRows.map(r => {
       const d = {};
@@ -1403,6 +1267,7 @@ async function loadData(sheetUrl) {
 
     render(repRows);
 
+    // Load history chart after main render (non-blocking)
     if (weekIndex.length >= 2) {
       requestAnimationFrame(() => loadRepHistory());
     }
