@@ -208,14 +208,14 @@ body {
 
 /* ── Performance ── */
 .perf-type-bar {
-  padding: 10px 15px; background: var(--surface2, #eef2f2);
-  border-bottom: 0.5px solid var(--border-md);
+  padding: 10px 15px; background: var(--blue-bg);
+  border-bottom: 0.5px solid var(--blue-bd);
   border-radius: 12px 12px 0 0;
   display: flex; align-items: center; gap: 7px;
 }
 
-.perf-type-bar svg { width: 13px; height: 13px; stroke: #475569; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.perf-type-name { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: #475569; }
+.perf-type-bar svg { width: 13px; height: 13px; stroke: var(--blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.perf-type-name { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--blue); }
 
 .perf-row {
   display: flex; align-items: center; gap: 12px;
@@ -696,7 +696,7 @@ function render(rows) {
 
     return types.map((t, ti) => `
       <section class="section">
-        <p class="section-label">${t.type} performance${multiCampaign && ti === 0 ? ` <span style="opacity:0.6;font-weight:500">· ${label}</span>` : ''}</p>
+        ${multiCampaign && ti === 0 ? `<p class="section-label">${label}</p>` : ''}
         <div class="perf-card card">
           <div class="perf-type-bar">${SVG_TAG}<span class="perf-type-name">${t.type}</span></div>
           <div class="perf-row">
@@ -1192,7 +1192,7 @@ async function loadRepHistory(currentPay) {
 
   const maxPay = Math.max(...points.map(p => p.pay), 1);
   const W = 100 / points.length;
-  const barH = 36;
+  const barH = 64;
 
   const bars = points.map((p, i) => {
     const h = p.found ? Math.max(3, Math.round((p.pay / maxPay) * barH)) : 3;
