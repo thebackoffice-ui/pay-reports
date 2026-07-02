@@ -175,7 +175,7 @@ body {
 .conv-label { font-size: 12px; font-weight: 600; color: var(--muted); }
 .conv-pct   { font-size: 12px; font-weight: 700; color: var(--text); }
 
-.conv-track { height: 5px; background: var(--bg); border-radius: 999px; overflow: hidden; }
+.conv-track { position: relative; height: 5px; background: var(--bg); border-radius: 999px; overflow: visible; }
 
 .conv-fill {
   height: 100%; width: 0%; border-radius: 999px;
@@ -185,6 +185,14 @@ body {
 .conv-fill.good { background: var(--green-bar); }
 .conv-fill.warn { background: var(--amber-bar); }
 .conv-fill.bad  { background: var(--red-bar); }
+
+.conv-target {
+  position: absolute; top: 50%; left: 80%;
+  width: 2px; height: 11px;
+  background: var(--text); opacity: 0.3;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+}
 
 .alert-box {
   margin-top: 13px; padding: 10px 13px; border-radius: 10px;
@@ -243,6 +251,7 @@ body {
 .earn-box.wide { grid-column: span 2; }
 .earn-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--soft); font-weight: 700; margin-bottom: 8px; }
 .earn-value { font-size: 23px; font-weight: 700; letter-spacing: -0.8px; color: var(--text); }
+.earn-value.zero { color: var(--soft); font-weight: 600; }
 
 /* ── Summary ── */
 .summary-row {
@@ -762,6 +771,7 @@ function render(rows) {
       </div>
       <div class="conv-track">
         <div class="conv-fill ${state}" id="cf"></div>
+        <div class="conv-target"></div>
       </div>
       <div class="alert-box ${state}">
         ${rateIcon}<span>${alertMsg}</span>
@@ -773,11 +783,11 @@ function render(rows) {
     <section class="section">
       <p class="section-label">Earnings breakdown</p>
       <div class="earn-grid">
-        <div class="earn-box card"><div class="earn-label">Top Ups</div><div class="earn-value" id="earn-topups">£0.00</div></div>
-        <div class="earn-box card"><div class="earn-label">Tablet</div><div class="earn-value" id="earn-tablet">£0.00</div></div>
-        <div class="earn-box card"><div class="earn-label">DWM Incentive</div><div class="earn-value" id="earn-dwm">£0.00</div></div>
-        <div class="earn-box card"><div class="earn-label">Adjustment</div><div class="earn-value" id="earn-adj">£0.00</div></div>
-        ${hasOverride ? `<div class="earn-box card wide"><div class="earn-label">Override</div><div class="earn-value" id="earn-override">£0.00</div></div>` : ''}
+        <div class="earn-box card"><div class="earn-label">Top Ups</div><div class="earn-value${topUps === 0 ? ' zero' : ''}" id="earn-topups">£0.00</div></div>
+        <div class="earn-box card"><div class="earn-label">Tablet</div><div class="earn-value${tablet === 0 ? ' zero' : ''}" id="earn-tablet">£0.00</div></div>
+        <div class="earn-box card"><div class="earn-label">DWM Incentive</div><div class="earn-value${dwm === 0 ? ' zero' : ''}" id="earn-dwm">£0.00</div></div>
+        <div class="earn-box card"><div class="earn-label">Adjustment</div><div class="earn-value${adj === 0 ? ' zero' : ''}" id="earn-adj">£0.00</div></div>
+        ${hasOverride ? `<div class="earn-box card wide"><div class="earn-label">Override</div><div class="earn-value${override === 0 ? ' zero' : ''}" id="earn-override">£0.00</div></div>` : ''}
       </div>
     </section>
 
