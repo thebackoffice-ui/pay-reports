@@ -208,14 +208,13 @@ body {
 
 /* ── Performance ── */
 .perf-type-bar {
-  padding: 10px 15px; background: var(--blue-bg);
-  border-bottom: 0.5px solid var(--blue-bd);
+  padding: 10px 15px; background: var(--blue);
   border-radius: 12px 12px 0 0;
   display: flex; align-items: center; gap: 7px;
 }
 
-.perf-type-bar svg { width: 13px; height: 13px; stroke: var(--blue); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.perf-type-name { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--blue); }
+.perf-type-bar svg { width: 13px; height: 13px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.perf-type-name { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: #fff; }
 
 .perf-row {
   display: flex; align-items: center; gap: 12px;
@@ -576,6 +575,11 @@ function num(v)   { return parseFloat(clean(v).replace(/[^0-9.-]/g, '')) || 0; }
 
 function formatMoney(n) {
   return '£' + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function formatCompact(n) {
+  if (n >= 1000) return '£' + (Math.round(n / 100) / 10) + 'k';
+  return '£' + Math.round(n);
 }
 
 function initials(name) {
@@ -1191,20 +1195,18 @@ async function loadRepHistory(currentPay) {
   if (found.length < 2) { el.style.display = 'none'; return; }
 
   const maxPay = Math.max(...points.map(p => p.pay), 1);
-  const W = 100 / points.length;
-  const barH = 64;
+  const barH = 74;
 
   const bars = points.map((p, i) => {
-    const h = p.found ? Math.max(3, Math.round((p.pay / maxPay) * barH)) : 3;
-    const y = barH - h;
+    const h = p.found ? Math.max(4, Math.round((p.pay / maxPay) * barH)) : 4;
     const isCurrent = i === points.length - 1;
-    const fill = !p.found ? '#e2e8f0' : isCurrent ? '#11766e' : 'rgba(17,118,110,0.35)';
-    return `<g>
-      <rect x="${i * W + 0.5}%" y="${y}" width="${W - 1}%" height="${h}" rx="2" fill="${fill}">
-        <title>${p.label}: ${p.found ? formatMoney(p.pay) : 'No data'}</title>
-      </rect>
-      ${isCurrent ? `<rect x="${i * W + 0.5}%" y="${y}" width="${W - 1}%" height="${h}" rx="2" fill="#11766e" opacity="1"/>` : ''}
-    </g>`;
+    const fill = !p.found ? 'var(--border-md)' : isCurrent ? 'var(--blue)' : 'var(--blue-bd)';
+    const labelColor = isCurrent ? 'var(--blue)' : 'var(--soft)';
+    return `
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;min-width:0;">
+        <span style="font-size:9.5px;font-weight:${isCurrent ? 700 : 600};color:${labelColor};margin-bottom:5px;white-space:nowrap;">${p.found ? formatCompact(p.pay) : '—'}</span>
+        <div style="width:100%;height:${h}px;background:${fill};border-radius:4px 4px 2px 2px;"></div>
+      </div>`;
   }).join('');
 
   const total = found.reduce((s, p) => s + p.pay, 0);
@@ -1215,15 +1217,15 @@ async function loadRepHistory(currentPay) {
   const trendColor = trend === '↑' ? 'var(--green)' : 'var(--red)';
 
   el.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
       <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.13em;color:var(--soft);">Earnings history</span>
       <div style="display:flex;align-items:center;gap:10px;">
         <span style="font-size:11px;font-weight:600;color:var(--muted);">Avg ${formatMoney(avg)}</span>
         ${trend ? `<span style="font-size:13px;font-weight:700;color:${trendColor}">${trend} vs last week</span>` : ''}
       </div>
     </div>
-    <svg width="100%" height="${barH}" viewBox="0 0 100 ${barH}" preserveAspectRatio="none" style="overflow:visible;">${bars}</svg>
-    <div style="display:flex;justify-content:space-between;margin-top:5px;">
+    <div style="display:flex;align-items:flex-end;gap:6px;border-bottom:1px solid var(--border);padding-bottom:8px;">${bars}</div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px;">
       <span style="font-size:10px;color:var(--soft);">${points[0].label}</span>
       <span style="font-size:10px;color:var(--soft);">${points[points.length-1].label}</span>
     </div>`;
